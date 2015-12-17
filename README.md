@@ -23,6 +23,7 @@
 - HTML/CSS
 - JavaScript
 - Python
+<br>
 <strong>Things We Can Figure Out</strong>
 - Handlebars (or other UX framework)
 - APIs:
@@ -33,6 +34,7 @@
   - Ticketmaster
   - Google Maps
   - Sendgrid
+<br>
 <strong>Ehhh</strong>
 - Geolocation
 - Digital Ocean server thing
