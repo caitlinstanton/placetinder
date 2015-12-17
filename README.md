@@ -19,11 +19,11 @@
 - Events on the to-do list will lead to the site where you can purchase tickets, book a reservation, etc.
 
 <h2>Technologies</h2>
-<h3>Things We Know</h3>
+<strong>Things We Know</strong>
 - HTML/CSS
 - JavaScript
 - Python
-<h3>Things We Can Figure Out</h3>
+<strong>Things We Can Figure Out</strong>
 - Handlebars (or other UX framework)
 - APIs:
   - Yelp
@@ -32,10 +32,13 @@
   - Fandago
   - Ticketmaster
   - Google Maps
-<h3>Ehhh</h3>
+  - Sendgrid
+<strong>Ehhh</strong>
 - Geolocation
+- Digital Ocean server thing
 
 <h2>Additional Features</h2>
+- Set up a server on Digital Ocean
 - User can manually add events to to-do list
 - More specifications to choose events
 - Show recommendations based on to-do list
