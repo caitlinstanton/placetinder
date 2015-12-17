@@ -5,10 +5,12 @@
 <p>Place Tinder helps users find places to go and events to see by selecting random events after the user puts in specifications.</p>
 
 <h2>User Flow</h2>
+- User creates an account (with their email to get notifications?)
 - User puts in specifications for what they want to go to:
   - Category of event
   - Price
   - Location (and distance from)
+  - Date range
 - App generates random results from all of the APIs that fit those specifications
 - Results are shown one at a time, and user is given the choice to either swipe left (reject) or swipe right (attend) events, or just skip them entirely
   - Rejected items will not pop up again
@@ -32,3 +34,9 @@
   - Google Maps
 <h3>Ehhh</h3>
 - Geolocation
+
+<h2>Additional Features</h2>
+- User can manually add events to to-do list
+- More specifications to choose events
+- Show recommendations based on to-do list
+- Suggest it to a friend
