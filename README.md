@@ -1,12 +1,12 @@
 <h1>placetinder</h1>
 
-<table border="1">
+
 <tr><th>Member</th><th>Role</th></tr>
 <tr><td>Caitlin Stanton</td><td>Leader</td></tr>
 <tr><td>Vivian Li</td><td>UX</td></tr>
 <tr><td>Isaac Gerstein</td><td>Middleware</td></tr> 
 <tr><td>Kathy Wang</td><td>Backend</td></tr> 
-</table>
+
 
 <h2>Concept</h2>
 <p>Are you bored? Don't know where you wanna go? Come to place tinder!!</p>
