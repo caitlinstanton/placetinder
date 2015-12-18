@@ -1,6 +1,6 @@
 <h1>placetinder</h1>
 
-<table border="1" align="center">
+<table>
 <tr><th>Member</th><th>Role</th></tr>
 <tr><td>Caitlin Stanton</td><td>Leader</td></tr>
 <tr><td>Vivian Li</td><td>UX</td></tr>
