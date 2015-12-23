@@ -5,6 +5,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    if session.has_key("loggedIn") and session["loggedIn"]:
+        loggedIn = session["loggedIn"]
+    else:
+        loggedIn = False
     return render_template("home.html")
 
 @app.route("/login", methods = ["GET", "POST"])
