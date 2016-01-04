@@ -13,13 +13,19 @@
     
     <!-- Custom CSS -->
     <link href="static/clean-blog.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
     <!-- JQuery Script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500' rel='stylesheet' type='text/css'>
     
   </head>
   
   <body>
+    {% block body %}
+    <div id="home">
+      <div align="center">
     Home
     {% if session["loggedIn"] %}
     <form method="GET" action="logout">
@@ -33,5 +39,8 @@
     <form method="POST" action="create">
       <input type="submit" name="submit" value="Create Account">
     </form>
+      </div>
+      </div>
+    {% endblock %}
   </body>
 </html>
