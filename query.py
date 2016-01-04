@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import hashlib
 
 def encrypt(word):
-    hashp = hashlib.md5()
+    hashp = hashlib.sha256()
     hashp.update(word)
     return hashp.hexdigest()
 
