@@ -5,5 +5,16 @@
     height: 100%;
     background-size: cover;
     overflow: hidden;
-    font-family: 'Maven Pro', sans-serif;
 }
+
+#headingType{
+    font-family: 'Maven Pro', sans-serif;
+    font-weight: 500;
+    margin-top: 10%;
+    font-size: 300%;
+    color: rgb(255,255,255);
+}
+
+.boxed {
+  border: 1px solid rgb(247,187,82);
+} 
