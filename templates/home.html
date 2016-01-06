@@ -18,6 +18,7 @@
     <!-- JQuery Script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+    <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500' rel='stylesheet' type='text/css'>
     
   </head>
@@ -26,8 +27,8 @@
     {% block body %}
     <div id="home">
       <div align="center">
-	<div id="headingType" class="boxed">
-	  place tinder
+	<div style="margin-top:10%">
+	  <h1 id="headingType" class="boxed">place tinder</h1>
 	</div>
 	{% if session["loggedIn"] %}
 	<form method="GET" action="logout">
@@ -35,8 +36,16 @@
 	</form>
 	{% else %}
 	<form method="POST" action="login">
-	  <div style="margin-top:3%">
-	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Login">
+	  <div style="margin-top:5%">
+	    <!--<input class="btn btn-warning btn-lg" type="submit" name="submit" value="Login">-->
+	    <button type="submit" name="submit">
+	       <div class="button-fill orange">
+		 <div class="button-text">Login</div>
+		 <div class="button-inside">
+		   <div class="inside-text">Login</div>
+		 </div>
+	       </div>
+	    </button>
 	  </div>
 	</form>
 	{% endif %}
@@ -48,5 +57,9 @@
       </div>
     </div>
     {% endblock %}
+    
+    <!-- Custom JS -->
+    <script src="static/js/script.js"></script>
+    
   </body>
 </html>
