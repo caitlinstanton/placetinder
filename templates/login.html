@@ -1,26 +1,25 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-  </head>
-  <body>
-    Login
-    <br>
-    <br>
-    {{error}}
-    <br>
-    <br>
-    <form method="POST">
-      Username:
-      <br>
-      <input type="text" name="username">
-      <br>
-      <br>
-      Password:
-      <br>
-      <input type="password" name="password">
-      <br>
-      <br>
-      <input type="submit" name="submit" value="Submit">
-    </form>
-  </body>
-</html>
+{% extends "home.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+Login
+<br>
+<br>
+{{error}}
+<br>
+<br>
+<form method="POST">
+  Username:
+  <br>
+  <input type="text" name="username">
+  <br>
+  <br>
+  Password:
+  <br>
+  <input type="password" name="password">
+  <br>
+  <br>
+  <input type="submit" name="submit" value="Submit">
+</form>
+{% endblock %}
