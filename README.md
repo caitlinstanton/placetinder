@@ -56,3 +56,4 @@
 
 <h2>CHANGELOG</h2>
 - 01/06 --> Used JavaScript to display all future events with Eventbrite (CS)
+-           Homepage styling
