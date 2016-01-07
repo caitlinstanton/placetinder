@@ -24,6 +24,3 @@ var submitForm = function submitForm(e) {
 	}
     });
 }
-
-var button = document.getElementById('saveButton');
-button.addEventListener('click',submitForm);
