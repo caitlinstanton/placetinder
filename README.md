@@ -53,3 +53,14 @@
 - More specifications to choose events
 - Show recommendations based on to-do list
 - Suggest it to a friend
+
+<h2>CHANGELOG</h2>
+12/21
+Created routes and templates
+<br>
+12/23
+User can create an account and log in
+<br>
+01/06
+Used JavaScript to display all future events with Eventbrite (CS)
+Homepage styling
