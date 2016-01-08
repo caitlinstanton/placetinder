@@ -7,6 +7,8 @@
 		var token = 'JYHSYPNUFM546GH2YJSO';
 		var $events = $("#events");
 		
+		var type = 'concerts';
+		
 		$.get('https://www.eventbriteapi.com/v3/events/search/?token='+token+'&expand=venue', function(res) {
 			if(res.events.length) {
 				var s = "<ul class='eventList'>";
