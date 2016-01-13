@@ -38,47 +38,19 @@
     border: 3px solid rgb(247,187,82);
 }
 
-/*
-    Name:           ph-buttons
-    Description: 	Pixcil Hub Buttons
-    Author: 		   Pixcils®
-    Version: 	  	1.0
-
-
-/*Main button class
-==========================
-.ph-button {
-	
-    border-style: solid;
-    border-width: 0px 0px 3px;
-    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
-    color: #FFFFFF;	   
-    border-radius: 6px;
-    cursor: pointer;
-    display: inline-block;
-    font-style: normal;
-    overflow: hidden;
-    text-align: center;
-    text-decoration: none;
-    text-overflow: ellipsis;
-    transition: all 200ms ease-in-out 0s;
-    white-space: nowrap;	
-    font-family: "Gotham Rounded A","Gotham Rounded B",Helvetica,Arial,sans-serif;
-    font-weight: 700;	
-    padding: 19px 39px 18px;
-    font-size: 18px;
-	
+#bg-center {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+    background: rgb(126, 205, 217);
 }
-/*Orange
-==========================
-.ph-btn-orange {
-
-    border-color: rgb(247,187,82);
-    background-color: rgb(247,187,100);
-
+#bg-right {
+    background-color: rgb(0,0,0);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    right: 0;
+    z-index: -1;
 }
-.ph-btn-green:hover, .ph-btn-orange:focus, .ph-btn-orange:active {
-    background-color: rgb(247,187,100);
-    border-color: rgb(247,187,82);    
-}
-*/
