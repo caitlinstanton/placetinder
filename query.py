@@ -13,16 +13,17 @@ def encrypt(word):
     hashp.update(word)
     return hashp.hexdigest()
 
-def addUser(username,password):
+def addUser(username, password, email):
     """
     Adds a user to the database.
     Args:
         username (str): The user's username.
         password (str): The user's password.
+        email (str): The user's email address.
     """
     connection = MongoClient()
     db = connection['data']
-    db.users.insert({'name':username, 'password':encrypt(password)})
+    db.users.insert({'name':username, 'password':encrypt(password), 'email':email})
 
 def userExists(username):
     """
