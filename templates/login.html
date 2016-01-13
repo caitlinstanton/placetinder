@@ -3,23 +3,50 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-Login
-<br>
-<br>
-{{error}}
-<br>
-<br>
-<form method="POST">
-  Username:
-  <br>
-  <input type="text" name="username">
-  <br>
-  <br>
-  Password:
-  <br>
-  <input type="password" name="password">
-  <br>
-  <br>
-  <input type="submit" name="submit" value="Submit">
-</form>
+<div id="login">
+  <div align="center">
+    <div style="margin-top:10%">
+      <h1 class="type">Login</h1>
+      {% if error %}
+      <!--
+      <br>
+      <h2>{{error}}</h2>
+      <br>
+      -->
+      <div id="errorModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+	  
+	  <div class="modal-content">
+	    <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+	    </div>
+	    <div class="modal-body">
+              <h1>Error</h1>
+	    </div>
+	    <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	    </div>
+	  </div>
+	  
+	</div>
+      </div>
+      {% endif %}
+      
+      <form method="POST">
+	
+	Username:
+	<br>
+	<input type="text" name="username">
+	<br>
+	<br>
+	Password:
+	<br>
+	<input type="password" name="password">
+	<br>
+	<br>
+	<input type="submit" name="submit" value="Submit" data-toggle="modal" data-target="#errorModal">
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
