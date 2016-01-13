@@ -30,9 +30,11 @@ def create():
         if request.form.has_key("username"):
             if request.form["password"] != request.form["confirmPassword"]:
                 return render_template("create.html", error = "Password does not match confirm password")
+            elif request.form["email"] != request.form["confirmEmail"]:
+                return render_template("create.html", error = "Email does not match confirm email")
             else:
                 if not query.userExists(request.form["username"]):
-                    query.addUser(request.form["username"], request.form["password"])
+                    query.addUser(request.form["username"], request.form["password"], request.form["email"])
                     session["loggedIn"] = True
                     session["username"] = request.form["username"]
                     return redirect("settings")
