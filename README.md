@@ -64,3 +64,9 @@ User can create an account and log in
 01/06
 Used JavaScript to display all future events with Eventbrite (CS)
 Homepage styling
+<br>
+01/13
+Yelp API completed
+Stubhub API completed
+Login/create styling
+
