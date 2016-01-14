@@ -6,7 +6,7 @@
 <div id="login">
   <div align="center">
     <div style="margin-top:10%">
-      <h1 class="type">Login</h1>
+      <h1 class="type"><u>Login</u></h1>
       {% if error %}
       <!--
       <br>
@@ -33,18 +33,18 @@
       {% endif %}
       
       <form method="POST">
-	
-	Username:
+	<div class="col-md-4 col-md-offset-4"> 
 	<br>
-	<input type="text" name="username">
+	<div class="form-group">
+	  <input type="text" class="form-control input-lg" name="username" placeholder="Username">
+	</div>
 	<br>
+	<div class="form-group">
+	  <input type="password" class="form-control input-lg" name="password" placeholder="Password">
+	</div>
 	<br>
-	Password:
-	<br>
-	<input type="password" name="password">
-	<br>
-	<br>
-	<input type="submit" name="submit" value="Submit" data-toggle="modal" data-target="#errorModal">
+	<input class="btn btn-warning btn-lg" type="submit" name="submit" value="Submit" data-toggle="modal" data-target="#errorModal">
+	</div>
       </form>
     </div>
   </div>

@@ -54,3 +54,8 @@
     right: 0;
     z-index: -1;
 }
+
+u {
+    text-decoration: none;
+    border-bottom: 2px solid rgb(247,187,82);
+}​
