@@ -11,7 +11,7 @@ eventbrite = Eventbrite('JYHSYPNUFM546GH2YJSO')
 
 @app.route('/teams/')
 def list_teams():
-    r = eventbrite.get('/search/events',concerts)
+    r = eventbrite.get('https://www.eventbriteapi.com/v3/events/search/?token=JYHSYPNUFM546GH2YJSO&expand=venue')
     print r.content
     teams_data = loads(r.content.description.text)
     return render_template('teams.html', teams = teams_data)
