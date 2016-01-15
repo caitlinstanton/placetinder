@@ -3,9 +3,31 @@
 {% block title %}Settings{% endblock %}
 
 {% block body %}
-<div id="home">
+<div class="container" id="home">
   <div align="center">
     <h1 id="headingType">Settings</h1>
+    
+    <div class="container">
+      <form role="form">
+	<label class="checkbox-inline">
+	  <input type="checkbox" value="">$
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" value="">$$
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" value="">$$$
+	</label>
+	<label class="checkbox-inline">
+	  <input type="checkbox" value="">$$$$
+	</label>
+      </form>
+    </div>
+
+    <div class="buttons" style="margin-top:5%">
+      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!">
+    </div>
+    
   </div>
 </div>
 {% endblock %}
