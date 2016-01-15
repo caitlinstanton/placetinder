@@ -1,5 +1,4 @@
-from pymongo import MongoClient
-import hashlib
+import sqlite3, hashlib
 
 def encrypt(word):
     """
@@ -21,9 +20,12 @@ def addUser(username, password, email):
         password (str): The user's password.
         email (str): The user's email address.
     """
-    connection = MongoClient()
-    db = connection['data']
-    db.users.insert({'name':username, 'password':encrypt(password), 'email':email})
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "INSERT INTO users VALUES('" + username + "','" + encrypt(password) + "','" + email + "');"
+    c.execute(q)
+    conn.commit()
+    conn.close()
 
 def userExists(username):
     """
@@ -33,12 +35,17 @@ def userExists(username):
     Returns:
         boolean: Whether the user exists.
     """
-    connection = MongoClient()
-    db = connection['data']
-    res = db.users.find({'name':username})
-    for doc in res:
-        return True
-    return False
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "SELECT name FROM users;"
+    exists = False
+    for i in c.execute(q):
+        if i[0] == username:
+            exists = True
+            break
+    conn.commit()
+    conn.close()
+    return exists
 
 def authenticate(username, password):
     """
@@ -49,10 +56,13 @@ def authenticate(username, password):
     Returns:
         boolean: Whether the username and password combination exists.
     """
-    connection = MongoClient()
-    db = connection['data']
-    res = db.users.find({'name':username})
-    for doc in res:
-        if encrypt(password) == doc['password']:
-            return True
-    return False
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "SELECT name, password FROM users;"
+    valid = False
+    for i in c.execute(q):
+        if i[0] == username and i[1] == encrypt(password):
+            valid = True
+    conn.commit()
+    conn.close()
+    return valid
