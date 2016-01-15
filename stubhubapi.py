@@ -3,7 +3,7 @@ import urllib2, json
 API_URL = "https://api.stubhub.com/search/catalog/events/v3"
 APPLICATION_TOKEN = "VsLaqXIQj3mygZTo36tu5rcoxkEa"
 
-def search(query):
+def searchQuery(query):
     """
     Search the StubHub API for all events that match a search query.
     Args:
@@ -21,3 +21,16 @@ def search(query):
     result = urllib2.urlopen(request).read()
     r = json.loads(result)
     return r["events"]
+
+def search(eventType, coordinates, radius, price, earliestTime, latestTime):
+    """
+    Search the StubHub API for all events that match the given parameters.
+    Args:
+        eventType (str): The type of event (Concerts, Sports, Theater, etc.).
+        coordinates (str): The latitude and longitude, separated by a comma.
+        radius (float): The radius around the coordinates to search within.
+        price (float): The approximate price in dollars.
+        earliestTime (str): The earliest possible time and date.
+        latestTime (str): The latest possible time and date.
+    """
+    
