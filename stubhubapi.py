@@ -24,14 +24,15 @@ def searchQuery(query, num):
     r = json.loads(result)
     return r["events"]
 
-def search(eventType, coordinates, radius, price, earliestTime, latestTime):
+def search(eventType, coordinates, radius, minPrice, maxPrice, earliestTime, latestTime):
     """
     Search the StubHub API for the top 500 events that match the given parameters.
     Args:
-        eventType (str): The type of event (Concert, Sports, Theater, etc.).
+        eventType (str): The broad category of event (Concert, Sports, Theater, or Arts). If none is specified, all events are searched.
         coordinates (str): The latitude and longitude, separated by a comma.
         radius (float): The radius around the coordinates to search within, in miles.
-        price (float): The approximate price in dollars.
+        minPrice (float): The minimum price in dollars.
+        maxPrice (float): The maximum price in dollars.
         earliestTime (str): The earliest possible time and date, in the form yyyy-mm-dd;hh:mm:ss (24-hour clock).
         latestTime (str): The latest possible time and date, in the form yyyy-mm-dd;hh:mm:ss (24-hour clock).
     Returns:
@@ -39,21 +40,52 @@ def search(eventType, coordinates, radius, price, earliestTime, latestTime):
     Raises:
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
-    url = API_URL + "?rows=500"
-    url += "&q=" + eventType # Must manually verify that event type matches
+    url = API_URL + "?rows=500&status=active"
+    if eventType != "":
+        url += "&q=" + eventType
+        if eventType == "Theater" or eventType == "Arts":
+            eventType = "Theater tickets and Arts"
     url += "&point=" + coordinates
-    url += "&radius=" + str(radius) # Must manually verify that event is in radius
-    # Manually check for price
+    url += "&radius=" + str(radius)
+    url += "&fieldList=*,ticketInfo"
     url += "&sort=eventDateLocal+asc"
-    # Manually check for date, use "start" parameter to go to next results if they exist
+    # To do: manually check for date, use "start" parameter to go to next results if they exist
     headers = {"Authorization":"Bearer " + APPLICATION_TOKEN,
                "Accept":"application/json",
                "Accept-Encoding":"application/json"}
     request = urllib2.Request(url, None, headers)
     result = urllib2.urlopen(request).read()
     r = json.loads(result)
-    print len(r["events"])
-    print r["events"][0]
-    return r["events"]
+    events = r["events"]
+    # Eliminate events that are not within the search radius
+    i = 0
+    while i < len(events):
+        if float(events[i]["distance"]) > radius:
+            events.pop(i)
+            i -= 1
+        i += 1
+    # Eliminate events that do not match the eventType
+    if eventType != "":
+        i = 0
+        while i < len(events):
+            listedType = events[i]["categories"][1]["name"]
+            if listedType != eventType:
+                events.pop(i)
+                i -= 1
+            i += 1
+    # Eliminate events that do not match the price
+    i = 0
+    while i < len(events):
+        currencyCode = events[i]["ticketInfo"]["currencyCode"]
+        minListedPrice = float(events[i]["ticketInfo"]["minPrice"])
+        maxListedPrice = float(events[i]["ticketInfo"]["maxPrice"])
+        # To do: convert to US dollars if currency code is different
+        if minListedPrice == 0 or maxPrice < minListedPrice or minPrice > maxListedPrice:
+            events.pop(i)
+            i -= 1
+        i += 1
+    
+    print len(events)
+    return events
 
-search("", "44.680239,-68.803044", 0, 0, 0, 0)
+search("", "44.680239,-68.803044", 100000000, 0, 50, 0, 0)
