@@ -24,7 +24,7 @@ def searchQuery(query, num):
     r = json.loads(result)
     return r["events"]
 
-def search(eventType, coordinates, radius, minPrice, maxPrice, earliestTime, latestTime):
+def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
     """
     Search the StubHub API for the top 500 events that match the given parameters.
     Args:
@@ -33,8 +33,8 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestTime, lat
         radius (float): The radius around the coordinates to search within, in miles.
         minPrice (float): The minimum price in dollars.
         maxPrice (float): The maximum price in dollars.
-        earliestTime (str): The earliest possible time and date, in the form yyyy-mm-dd;hh:mm:ss (24-hour clock).
-        latestTime (str): The latest possible time and date, in the form yyyy-mm-dd;hh:mm:ss (24-hour clock).
+        earliestDate (str): The earliest possible UTC time and date, in the form yyyy-mm-dd;hh:mm (24-hour clock).
+        latestDate (str): The latest possible UTC time and date, in the form yyyy-mm-dd;hh:mm (24-hour clock).
     Returns:
         list: A list of the JSON responses from events that match the search query.
     Raises:
@@ -48,15 +48,14 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestTime, lat
     url += "&point=" + coordinates
     url += "&radius=" + str(radius)
     url += "&fieldList=*,ticketInfo"
-    url += "&sort=eventDateLocal+asc"
-    # To do: manually check for date, use "start" parameter to go to next results if they exist
+    url += "&date=" + earliestDate.replace(";", "T") + "+TO+" + latestDate.replace(";", "T")
     headers = {"Authorization":"Bearer " + APPLICATION_TOKEN,
                "Accept":"application/json",
                "Accept-Encoding":"application/json"}
     request = urllib2.Request(url, None, headers)
     result = urllib2.urlopen(request).read()
     r = json.loads(result)
-    events = r["events"]
+    events = r["events"]    
     # Eliminate events that are not within the search radius
     i = 0
     while i < len(events):
@@ -84,8 +83,7 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestTime, lat
             events.pop(i)
             i -= 1
         i += 1
-    
     print len(events)
     return events
 
-search("", "44.680239,-68.803044", 100000000, 0, 50, 0, 0)
+search("", "44.680239,-68.803044", 100000000, 0, 50, "2016-02-01;00:00", "2016-02-02;00:00")
