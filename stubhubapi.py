@@ -3,6 +3,23 @@ import urllib2, json
 API_URL = "https://api.stubhub.com/search/catalog/events/v3"
 APPLICATION_TOKEN = "VsLaqXIQj3mygZTo36tu5rcoxkEa"
 
+def getRates(currencies):
+    """
+    Finds the exchange rate of currencies to US dollars.
+    Args:
+        currencies (list): A list of three-letter currency codes.
+    Returns:
+        dict: A dictionary with currency codes as keys and exchange rates as values.
+    """
+    currencyString = ""
+    for i in currencies:
+        currencyString += i + ","
+    currencyString = currencyString[:len(currencyString) - 1]
+    url = "http://api.fixer.io/latest?base=USD&symbols=" + currencyString
+    result = urllib2.urlopen(url).read()
+    r = json.loads(result)
+    return r["rates"]
+
 def searchQuery(query, num):
     """
     Search the StubHub API for a number of events that match a search query.
@@ -26,7 +43,7 @@ def searchQuery(query, num):
 
 def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
     """
-    Search the StubHub API for the top 500 events that match the given parameters.
+    Search the StubHub API for the top events that match the given parameters.
     Args:
         eventType (str): The broad category of event (Concert, Sports, Theater, or Arts). If none is specified, all events are searched.
         coordinates (str): The latitude and longitude, separated by a comma.
@@ -55,7 +72,7 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
     request = urllib2.Request(url, None, headers)
     result = urllib2.urlopen(request).read()
     r = json.loads(result)
-    events = r["events"]    
+    events = r["events"]
     # Eliminate events that are not within the search radius
     i = 0
     while i < len(events):
@@ -74,11 +91,21 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
             i += 1
     # Eliminate events that do not match the price
     i = 0
+    otherCurrencies = []
+    while i < len(events):
+        currencyCode = events[i]["ticketInfo"]["currencyCode"]
+        if currencyCode != "USD" and not currencyCode in otherCurrencies:
+            otherCurrencies.append(currencyCode)
+        i += 1
+    rates = getRates(otherCurrencies)
+    i = 0
     while i < len(events):
         currencyCode = events[i]["ticketInfo"]["currencyCode"]
         minListedPrice = float(events[i]["ticketInfo"]["minPrice"])
         maxListedPrice = float(events[i]["ticketInfo"]["maxPrice"])
-        # To do: convert to US dollars if currency code is different
+        if currencyCode != "USD":
+            minListedPrice = minListedPrice / rates[currencyCode]
+            maxListedPrice = maxListedPrice / rates[currencyCode]
         if minListedPrice == 0 or maxPrice < minListedPrice or minPrice > maxListedPrice:
             events.pop(i)
             i -= 1
