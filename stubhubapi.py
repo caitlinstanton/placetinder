@@ -41,6 +41,41 @@ def searchQuery(query, num):
     r = json.loads(result)
     return r["events"]
 
+def searchHelper(start, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
+    """
+    Return the unfiltered results from the StubHub API that match the given parameters.
+    Args:
+        start (int): The index of the found results to start at.
+        eventType (str): The broad category of event (Concert, Sports, Theater, or Arts). If none is specified, all events are searched.
+        coordinates (str): The latitude and longitude, separated by a comma.
+        radius (float): The radius around the coordinates to search within, in miles.
+        minPrice (float): The minimum price in dollars.
+        maxPrice (float): The maximum price in dollars.
+        earliestDate (str): The earliest possible UTC time and date, in the form yyyy-mm-dd;hh:mm (24-hour clock).
+        latestDate (str): The latest possible UTC time and date, in the form yyyy-mm-dd;hh:mm (24-hour clock).
+    Returns:
+        dict: A dictionary of the response from the API.
+    Raises:
+        urllib2.HTTPError: An error occurs from the HTTP request.
+    """
+    url = API_URL + "?rows=500&status=active"
+    url += "&start=" + str(start)
+    if eventType != "":
+        url += "&q=" + eventType
+        if eventType == "Theater" or eventType == "Arts":
+            eventType = "Theater tickets and Arts"
+    url += "&point=" + coordinates
+    url += "&radius=" + str(radius)
+    url += "&fieldList=*,ticketInfo"
+    url += "&date=" + earliestDate.replace(";", "T") + "+TO+" + latestDate.replace(";", "T")
+    headers = {"Authorization":"Bearer " + APPLICATION_TOKEN,
+               "Accept":"application/json",
+               "Accept-Encoding":"application/json"}
+    request = urllib2.Request(url, None, headers)
+    result = urllib2.urlopen(request).read()
+    r = json.loads(result)
+    return r
+
 def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
     """
     Search the StubHub API for the top events that match the given parameters.
@@ -57,22 +92,20 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
     Raises:
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
-    url = API_URL + "?rows=500&status=active"
-    if eventType != "":
-        url += "&q=" + eventType
-        if eventType == "Theater" or eventType == "Arts":
-            eventType = "Theater tickets and Arts"
-    url += "&point=" + coordinates
-    url += "&radius=" + str(radius)
-    url += "&fieldList=*,ticketInfo"
-    url += "&date=" + earliestDate.replace(";", "T") + "+TO+" + latestDate.replace(";", "T")
-    headers = {"Authorization":"Bearer " + APPLICATION_TOKEN,
-               "Accept":"application/json",
-               "Accept-Encoding":"application/json"}
-    request = urllib2.Request(url, None, headers)
-    result = urllib2.urlopen(request).read()
-    r = json.loads(result)
+    # Gets the unfiltered events from the API
+    r = searchHelper(0, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
+    numFound = r["numFound"]
+    if numFound == 0:
+        numRequests = 0
+    else:
+        numRequests = (numFound - 1) / 500
     events = r["events"]
+    for i in range(0, numRequests):
+        try:
+            nextEvents = searchHelper((i + 1) * 500, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)["events"]
+            events += nextEvents
+        except:
+            pass
     # Eliminate events that are not within the search radius
     i = 0
     while i < len(events):
@@ -110,7 +143,5 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
             events.pop(i)
             i -= 1
         i += 1
-    print len(events)
+    # Returns a list of filtered events
     return events
-
-search("", "44.680239,-68.803044", 100000000, 0, 50, "2016-02-01;00:00", "2016-02-02;00:00")
