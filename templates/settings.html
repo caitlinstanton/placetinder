@@ -2,6 +2,8 @@
 
 {% block title %}Settings{% endblock %}
 
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-datetimepicker.min.css">
+
 {% block body %}
 <div class="container" id="home">
   <div align="center">
@@ -44,14 +46,8 @@
 	    <br>
 	    <div class="form-group">
 	      <h3>Location</h3>
-	      <input type="location" class="form-control input-lg" name="location" placeholder="type">
+	      <input type="text" class="form-control input-lg" name="location" placeholder="type">
 	    </div>
-
-            <script type="text/javascript">
-              $(function () {
-              $('#datetimepicker1').datetimepicker();
-              });
-            </script>
 
 	  </form>
 
@@ -64,7 +60,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 {% endblock %}
