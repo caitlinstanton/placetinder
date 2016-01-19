@@ -5,29 +5,66 @@
 {% block body %}
 <div class="container" id="home">
   <div align="center">
-    <h1 id="headingType">Settings</h1>
-    
-    <div class="container">
-      <form role="form">
-	<label class="checkbox-inline">
-	  <input type="checkbox" value="">$
-	</label>
-	<label class="checkbox-inline">
-	  <input type="checkbox" value="">$$
-	</label>
-	<label class="checkbox-inline">
-	  <input type="checkbox" value="">$$$
-	</label>
-	<label class="checkbox-inline">
-	  <input type="checkbox" value="">$$$$
-	</label>
-      </form>
-    </div>
+    <div style="margin-top:5%">
+      <h2 class="type"><u>Settings</u></h2>
+      
+      <div class="container type" style="margin-top:2%">
+	<div class="col-md-4 col-md-offset-4"> 
+	  <form method="POST">
+	    
+	    <div class="form-group">
+	      <h3>Price</h3>
+	      <label class="checkbox-inline">
+		<input type="checkbox" value="">$
+	      </label>
+	      <label class="checkbox-inline">
+		<input type="checkbox" value="">$$
+	      </label>
+	      <label class="checkbox-inline">
+		<input type="checkbox" value="">$$$
+	      </label>
+	      <label class="checkbox-inline">
+		<input type="checkbox" value="">$$$$
+	      </label>
+	    </div>
+	    <div class="form-group">
+	      <h3>Type</h3>
+	      <input type="type" class="form-control input-lg" name="type" placeholder="type">
+	    </div>
+	    <br>
+	    <div class="form-group">
+	      <h3>Date Range</h3>
+              <div class="input-group date" id="datetimepicker1">
+		<input type="text" class="form-control" />
+		<span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+		</span>
+              </div>
+	    </div>
+	    <br>
+	    <div class="form-group">
+	      <h3>Location</h3>
+	      <input type="location" class="form-control input-lg" name="location" placeholder="type">
+	    </div>
 
-    <div class="buttons" style="margin-top:5%">
-      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!">
+            <script type="text/javascript">
+              $(function () {
+              $('#datetimepicker1').datetimepicker();
+              });
+            </script>
+
+	  </form>
+
+	  <div class="buttons" style="margin-top:5%">
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!" style="float:left">
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Submit">
+	  </div>
+
+	</div>
+      </div>
     </div>
-    
   </div>
+
 </div>
+
 {% endblock %}
