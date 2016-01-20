@@ -43,9 +43,13 @@ def create():
         else:
             return render_template("create.html")
 
-@app.route("/settings")
+@app.route("/settings", methods = ["GET", "POST"])
 def settings():
-    return render_template("settings.html")
+    if request.form.has_key("submit"):
+        print request.form
+        return redirect("results")
+    else:
+        return render_template("settings.html")
 
 @app.route("/results")
 def results():
