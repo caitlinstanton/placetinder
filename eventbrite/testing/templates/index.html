@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>This Weekend App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/vendor/normalize.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+  <link rel="stylesheet" href="/static/css/animations.css">
+  <script src="/static/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+<body ng-cloak>
+
+
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a id= "blueit" class="navbar-brand">This Weekend</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#/signup">Signup<span class="sr-only">(current)</span></a></li>
+        <li><a href="#/login">Log in</a></li>
+        <li class="active"><a href="#/events">Search Events</a></li>
+        <li>
+            <button class="btn black" data-toggle="modal" data-target="#myModal">
+              Saved Events
+            </button>
+        </li>
+        <li id="left">
+          <button class="btn black">Log out</button>
+        </li>
+      </ul>
+    </div>
+</nav>
+<div  class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div  class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 style="font-size: 20px"class="modal-title" id="myModalLabel">Your Events</h4>
+      </div>
+      <div  ng-model = "savedevents" ng-controller="savedEventCtrl" class="modal-body">
+          <li ng-repeat="event in savedevents" class="thumbnail">
+            <img ng-src="/static/images/{{openbraces}}event.image{{closebraces}}"  id="thumbsize">
+            <a href="#/eventdetail/{{openbraces}}event.id{{closebraces}}"><span class="grey" style="font-size: 18px">{{openbraces}}event.title{{closebraces}}</span></a>
+          </li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default blue" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid menu" ng-controller="EventListCtrl">
+      <div class="row">
+        <div class="col-md-12">
+        <div ng-view ng-cloak></div>
+        </div>
+      </div>
+</div>
+
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="/static/vendor/angular.js"></script>
+  <script src="/static/vendor/angular-animate.js"></script>
+  <script src="/static/vendor/angular-route.js"></script>
+  <script src="/static/js/controllers.js"></script>
+  <script src="/static/js/animations.js"></script>
+  <script src="/static/js/filters.js"></script>
+  <script src="/static/js/directives.js"></script>
+  <script src="/static/js/services.js"></script>
+   <script src="/static/js/app.js"></script>
+
+</body>
+</html>
