@@ -25,29 +25,91 @@
   
   <body>
     {% block body %}
-     <div id="home">
-	<div align="center">
-	  <div style="margin-top:10%">
-	    <h1 id="headingType" class="boxed">place tinder</h1>
-	  </div>
-	  {% if session["loggedIn"] %}
-	  <div class="buttons" style="margin-top:5%">
-	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Logout">
-	  </div>
-	  {% else %}
-	  <form method="POST" action="login">
-	    <div class="buttons" style="margin-top:5%">
-	      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Login">
-	    </div>
-	  </form>
-	  {% endif %}
-	  <form method="POST" action="create">
-	    <div style="margin-top:1%">	    
-	      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Create Account">
-	    </div>
-	  </form>
+    <div id="home">
+      <div align="center">
+	<div style="margin-top:10%">
+	  <h1 id="headingType" class="boxed">place tinder</h1>
 	</div>
+	{% if session["loggedIn"] %}
+	<div class="buttons" style="margin-top:5%">
+	  <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Logout">
+	</div>
+	{% else %}
+	<form method="POST" action="login">
+	  <div class="buttons" style="margin-top:5%">
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Login" data-toggle="modal" data-target="#loginModal">
+	  </div>
+	</form>
+	{% endif %}
+	<form method="POST" action="create">
+	  <div style="margin-top:1%">	    
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Create Account" data-toggle="modal" data-target="#createModal">
+	  </div>
+	</form>
+      </div>
     </div>
+
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h1 class="text-center type">Login</h1>
+	    {% if error %}
+	    <div class="center_div">
+	      {{ error }}
+	    </div>
+	    {% endif %}
+	  </div>
+	  <div class="modal-body">
+	    <form class="form col-md-12 center-block" method="POST">
+	      <div class="form-group">
+		<input type="username" class="form-control input-lg" id="in_username" name="in_username" placeholder="Username" value="login">
+	      </div>
+	      <div class="form-group">
+		<input type="password" class="form-control input-lg" id="in_password" name="in_password" placeholder="Password" value="login">
+	      </div>
+	      <div class="form-group">
+		<button name="button" type="submit" class="btn btn-warning btn-lg btn-block type" value="login" id="button">Sign In</button>
+		<br>
+		<span class="pull-right"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#regisModal">No account? Register now</button>
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div id="createModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h1 class="text-center type">Register</h1>
+	  </div>
+	  <div class="modal-body">
+	    <form class="form col-md-12 center-block" method="POST">
+	      <div class="form-group">
+		<input type="username" class="form-control input-lg" id="regis_username" name="regis_username" value="register" placeholder="Username?">
+	      </div>
+	      <div class="form-group">
+		<input type="password" class="form-control input-lg" id="regis_password" name="regis_password" value="register" placeholder="Password?">
+	      </div>
+	      <div class="form-group">
+		<button name="button" type="submit" class="btn btn-warning btn-lg btn-block type" value="register" id="button">Submit</button>
+		<br>
+		<span class="pull-right"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-toggle="modal" data-target="#loginModal">Have an account? Login</button>
+	      </div>
+	    </form>
+	  </div>
+	  <div class="modal-footer">
+	  </div>
+	</div>
+      </div>
+    </div>
+    
     {% endblock %}
     
     <!-- Custom JS -->
