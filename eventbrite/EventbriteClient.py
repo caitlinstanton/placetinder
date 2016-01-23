@@ -4,21 +4,13 @@ from platform import platform
 
 import requests
 
-from .access_methods import AccessMethodsMixin
-from .compat import json, string_type
-from .decorators import objectify
-from .exceptions import (
-    IllegalHttpMethod,
-    InvalidWebhook
-)
-from . import __version__
-from .utils import (
-    format_path,
-    construct_namespaced_dict,
-    get_webhook_from_request,
-    EVENTBRITE_API_URL
-)
+import AccessMethodsMixin
+from compat import json, string_type
+import objectify
+#from exceptions import IllegalHttpMethod, InvalidWebhook
+from utils import format_path, construct_namespaced_dict, get_webhook_from_request, EVENTBRITE_API_URL
 
+__version__ = '3.3.3'
 
 class Eventbrite(AccessMethodsMixin):
 
