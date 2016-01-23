@@ -41,12 +41,12 @@ def searchQuery(query, num):
     r = json.loads(result)
     return r["events"]
 
-def searchHelper(start, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
+def searchHelper(start, query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
     """
     Return the unfiltered results from the StubHub API that match the given parameters.
     Args:
         start (int): The index of the found results to start at.
-        eventType (str): The broad category of event (Concert, Sports, Theater, or Arts). If none is specified, all events are searched.
+        query (str): The query to search for events. If left an empty string, all events are searched.
         coordinates (str): The latitude and longitude, separated by a comma.
         radius (float): The radius around the coordinates to search within, in miles.
         minPrice (float): The minimum price in dollars.
@@ -60,10 +60,8 @@ def searchHelper(start, eventType, coordinates, radius, minPrice, maxPrice, earl
     """
     url = API_URL + "?rows=500&status=active"
     url += "&start=" + str(start)
-    if eventType != "":
-        url += "&q=" + eventType
-        if eventType == "Theater" or eventType == "Arts":
-            eventType = "Theater tickets and Arts"
+    if query != "":
+        url += "&q=" + query
     url += "&point=" + coordinates
     url += "&radius=" + str(radius)
     url += "&fieldList=*,ticketInfo"
@@ -76,11 +74,11 @@ def searchHelper(start, eventType, coordinates, radius, minPrice, maxPrice, earl
     r = json.loads(result)
     return r
 
-def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
+def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate):
     """
     Search the StubHub API for the top events that match the given parameters.
     Args:
-        eventType (str): The broad category of event (Concert, Sports, Theater, or Arts). If none is specified, all events are searched.
+        query (str): The query to search for events. If left an empty string, all events are searched.
         coordinates (str): The latitude and longitude, separated by a comma.
         radius (float): The radius around the coordinates to search within, in miles.
         minPrice (float): The minimum price in dollars.
@@ -93,7 +91,7 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
     # Gets the unfiltered events from the API
-    r = searchHelper(0, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
+    r = searchHelper(0, query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
     numFound = r["numFound"]
     if numFound == 0:
         numRequests = 0
@@ -102,7 +100,7 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
     events = r["events"]
     for i in range(0, numRequests):
         try:
-            nextEvents = searchHelper((i + 1) * 500, eventType, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)["events"]
+            nextEvents = searchHelper((i + 1) * 500, query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)["events"]
             events += nextEvents
         except:
             pass
@@ -113,15 +111,6 @@ def search(eventType, coordinates, radius, minPrice, maxPrice, earliestDate, lat
             events.pop(i)
             i -= 1
         i += 1
-    # Eliminate events that do not match the eventType
-    if eventType != "":
-        i = 0
-        while i < len(events):
-            listedType = events[i]["categories"][1]["name"]
-            if listedType != eventType:
-                events.pop(i)
-                i -= 1
-            i += 1
     # Eliminate events that do not match the price
     i = 0
     otherCurrencies = []
