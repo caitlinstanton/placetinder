@@ -4,7 +4,6 @@ from platform import platform
 
 import requests
 
-<<<<<<< HEAD
 
 from .compat import json, string_type
 from .decorators import objectify
@@ -19,13 +18,13 @@ from .utils import (
     get_webhook_from_request,
     EVENTBRITE_API_URL
 )
-=======
+
 import AccessMethodsMixin
 from compat import json, string_type
 import objectify
 #from exceptions import IllegalHttpMethod, InvalidWebhook
 from utils import format_path, construct_namespaced_dict, get_webhook_from_request, EVENTBRITE_API_URL
->>>>>>> dfb199d8fc5e5ece9b1b6f15061c004cd9d5fbf1
+
 
 __version__ = '3.3.3'
 
