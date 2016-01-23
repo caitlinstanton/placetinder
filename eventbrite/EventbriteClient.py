@@ -4,7 +4,7 @@ from platform import platform
 
 import requests
 
-from .access_methods import AccessMethodsMixin
+
 from .compat import json, string_type
 from .decorators import objectify
 from .exceptions import (
