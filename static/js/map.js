@@ -10,6 +10,9 @@ var initMap = function initMap() {
 	map: map
     });
 
+    var coordinates = document.getElementById("coordinates");
+    coordinates.value = "(40.71, -74.01)"
+
     var circle = new google.maps.Circle({
 	strokeColor: '#FF0000',
 	strokeOpacity: 0.8,
@@ -24,5 +27,21 @@ var initMap = function initMap() {
     map.addListener("click", function(e) {
 	marker.setPosition(e.latLng);
 	circle.setCenter(e.latLng);
+	coordinates.value = e.latLng;
+    });
+
+    circle.addListener("click", function(e) {
+	marker.setPosition(e.latLng);
+	circle.setCenter(e.latLng);
+	coordinates.value = e.latLng;
+    });
+
+    var radius = document.getElementById("radius")
+    radius.addEventListener("input", function(e) {
+	var radiusInput = parseInt(radius.value);
+	if (isNaN(radiusInput)){
+	    radiusInput = 0;
+	}
+	circle.setRadius(radiusInput * 1609.34);
     });
 };

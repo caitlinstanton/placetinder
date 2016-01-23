@@ -45,13 +45,14 @@
               </div>
 	    </div>
 	    <br>
-	    <div class="form-group">
-	      <h3>Location (lat,long,radius for now)</h3>
-	      <input type="text" class="form-control input-lg" name="location" placeholder="type">
-	    </div>
 
 	    <div id="map" style="width: 250px; height: 200px">
 	    </div>
+
+	    <input id="coordinates" type="hidden" name="coordinates" value="">
+	    
+	    <h3>Radius (miles)</h3>
+	    <input id="radius" type="text" class="form-control" name="radius" value="20">
 
 	    <div class="buttons" style="margin-top:5%">
 	      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!" style="float:left">
@@ -70,8 +71,7 @@
     </div>
   </div>
 </div>
-<script src="../static/js/map.js">
-</script>
+<script src="../static/js/map.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
 
 {% endblock %}
