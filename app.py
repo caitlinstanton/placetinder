@@ -81,18 +81,32 @@ def settings():
                 query.addEvent(i, numEvents)
                 numEvents += 1
             session["searched"] = True
+            session["eventCounter"] = 0
             return redirect("results")
     else:
         return render_template("settings.html")
 
-@app.route("/results")
+@app.route("/results", methods = ["GET", "POST"])
 def results():
     if session.has_key("searched") and session["searched"]:
         events = query.getEvents()
-        if len(events) > 0:
-            return render_template("results.html", event = events[0])
+        if request.form.has_key("reject"):
+            session["eventCounter"] += 1
+            if len(events) > session["eventCounter"]:
+                return render_template("results.html", event = events[session["eventCounter"]])
+            else:
+                return render_template("results.html", message = "No events remaining")
+        elif request.form.has_key("accept"):
+            session["eventCounter"] += 1
+            if len(events) > session["eventCounter"]:
+                return render_template("results.html", event = events[session["eventCounter"]])
+            else:
+                return render_template("results.html", message = "No events remaining")
         else:
-            return render_template("results.html", message = "No events found")
+            if len(events) > 0:
+                return render_template("results.html", event = events[0])
+            else:
+                return render_template("results.html", message = "No events found")
     else:
         return redirect("settings")
 
@@ -105,6 +119,7 @@ def logout():
     if session.has_key("loggedIn") and session["loggedIn"]:
         session["username"] = ""
         session["searched"] = False
+        session["eventCounter"] = 0
         session["loggedIn"] = False
     return redirect("")
 

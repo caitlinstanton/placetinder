@@ -25,12 +25,14 @@
 	{% endif %}
       </div>
       <br>
-      <button type="button" class="btn btn-warning btn-lg">
-	<span class="glyphicon glyphicon-remove"></span>
-      </button>
-      <button type="button" class="btn btn-warning btn-lg">
-	<span class="glyphicon glyphicon-ok"></span>
-      </button>
+      <form method="POST" id="form">
+	<button form="form" name="reject" type="submit" class="btn btn-warning btn-lg">
+	  <span class="glyphicon glyphicon-remove"></span>
+	</button>
+	<button form="form" name="accept" type="submit" class="btn btn-warning btn-lg">
+	  <span class="glyphicon glyphicon-ok"></span>
+	</button>
+      </form>
     </div>
   </div>
 </div>
