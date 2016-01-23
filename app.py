@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-import query
+import query, stubhubapi
 
 app = Flask(__name__)
 
@@ -46,7 +46,25 @@ def create():
 @app.route("/settings", methods = ["GET", "POST"])
 def settings():
     if request.form.has_key("submit"):
-        print request.form
+        eventType = request.form["type"]
+        dateRange = request.form["date"]
+        location = request.form["location"]
+        if request.form.has_key("$"):
+            highPrice = 25
+        if request.form.has_key("$$"):
+            highPrice = 50
+        if request.form.has_key("$$$"):
+            highPrice = 100
+        if request.form.has_key("$$$$"):
+            highPrice = 999999999
+            lowPrice = 100
+        if request.form.has_key("$$$"):
+            lowPrice = 50
+        if request.form.has_key("$$"):
+            lowPrice = 25
+        if request.form.has_key("$"):
+            lowPrice = 0
+        events = stubhubapi.search(eventType, location[:location.rindex(",")], location[location.rindex(",")+1:], lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
         return redirect("results")
     else:
         return render_template("settings.html")
