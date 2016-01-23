@@ -9,6 +9,10 @@
   <div align="center">
     <div style="margin-top:5%">
       <h2 class="type"><u>Settings</u></h2>
+
+      {% if error %}
+      <h4 class="type" style="color:red;">{{error}}</h4>
+      {% endif %}
       
       <div class="container type" style="margin-top:2%">
 	<div class="col-md-4 col-md-offset-4">
@@ -32,7 +36,7 @@
 	    </div>
 	    <div class="form-group">
 	      <h3>Type</h3>
-	      <input type="text" class="form-control input-lg" name="type" placeholder="type">
+	      <input type="text" class="form-control input-lg" name="type" placeholder="all types">
 	    </div>
 	    <br>
 	    <div class="form-group">
@@ -45,10 +49,14 @@
               </div>
 	    </div>
 	    <br>
-	    <div class="form-group">
-	      <h3>Location (lat,long,radius for now)</h3>
-	      <input type="text" class="form-control input-lg" name="location" placeholder="type">
+
+	    <div id="map" style="width: 250px; height: 200px">
 	    </div>
+
+	    <input id="coordinates" type="hidden" name="coordinates" value="">
+	    
+	    <h3>Radius (miles)</h3>
+	    <input id="radius" type="text" class="form-control" name="radius" value="20">
 
 	    <div class="buttons" style="margin-top:5%">
 	      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!" style="float:left">
@@ -67,5 +75,7 @@
     </div>
   </div>
 </div>
+<script src="../static/js/map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
 
 {% endblock %}
