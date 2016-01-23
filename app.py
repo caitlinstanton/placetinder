@@ -51,6 +51,8 @@ def settings():
         radius = request.form["radius"]
         coordinates = request.form["coordinates"].replace(" ", "")
         coordinates = coordinates[1:len(coordinates)-1]
+        highPrice = -1;
+        lowPrice = -1;
         if request.form.has_key("$"):
             highPrice = 25
         if request.form.has_key("$$"):
@@ -66,8 +68,11 @@ def settings():
             lowPrice = 25
         if request.form.has_key("$"):
             lowPrice = 0
-        events = stubhubapi.search(eventType, coordinates.replace(" ", ""), radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-        return redirect("results")
+        if highPrice == -1 or lowPrice == -1:
+            return render_template("settings.html", error = "Specify a price range")
+        else:
+            events = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+            return redirect("results")
     else:
         return render_template("settings.html")
 

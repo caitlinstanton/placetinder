@@ -16,9 +16,14 @@ def getRates(currencies):
         currencyString += i + ","
     currencyString = currencyString[:len(currencyString) - 1]
     url = "http://api.fixer.io/latest?base=USD&symbols=" + currencyString
-    result = urllib2.urlopen(url).read()
-    r = json.loads(result)
-    return r["rates"]
+    try:
+        result = urllib2.urlopen(url).read()
+        rates = json.loads(result)["rates"]
+    except:
+        rates = {}
+        for i in currencies:
+            rates[i] = 1.0
+    return rates
 
 def searchQuery(query, num):
     """
@@ -119,7 +124,8 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
         if currencyCode != "USD" and not currencyCode in otherCurrencies:
             otherCurrencies.append(currencyCode)
         i += 1
-    rates = getRates(otherCurrencies)
+    if len(otherCurrencies) > 0:
+        rates = getRates(otherCurrencies)
     i = 0
     while i < len(events):
         currencyCode = events[i]["ticketInfo"]["currencyCode"]

@@ -9,6 +9,10 @@
   <div align="center">
     <div style="margin-top:5%">
       <h2 class="type"><u>Settings</u></h2>
+
+      {% if error %}
+      <h4 class="type" style="color:red;">{{error}}</h4>
+      {% endif %}
       
       <div class="container type" style="margin-top:2%">
 	<div class="col-md-4 col-md-offset-4">
@@ -32,7 +36,7 @@
 	    </div>
 	    <div class="form-group">
 	      <h3>Type</h3>
-	      <input type="text" class="form-control input-lg" name="type" placeholder="type">
+	      <input type="text" class="form-control input-lg" name="type" placeholder="all types">
 	    </div>
 	    <br>
 	    <div class="form-group">
