@@ -46,7 +46,6 @@ def create():
 @app.route("/settings", methods = ["GET", "POST"])
 def settings():
     if request.form.has_key("submit"):
-        print request.form
         eventType = request.form["type"]
         dateRange = request.form["date"]
         radius = request.form["radius"]
@@ -68,8 +67,6 @@ def settings():
         if request.form.has_key("$"):
             lowPrice = 0
         events = stubhubapi.search(eventType, coordinates.replace(" ", ""), radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-        for i in events:
-            print i["distance"]
         return redirect("results")
     else:
         return render_template("settings.html")

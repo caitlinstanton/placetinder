@@ -10,9 +10,6 @@ var initMap = function initMap() {
 	map: map
     });
 
-    var coordinates = document.getElementById("coordinates");
-    coordinates.value = "(40.71, -74.01)"
-
     var circle = new google.maps.Circle({
 	strokeColor: '#FF0000',
 	strokeOpacity: 0.8,
@@ -23,6 +20,21 @@ var initMap = function initMap() {
 	center: marker.getPosition(),
 	radius: 32186.9
     });
+
+    var coordinates = document.getElementById("coordinates");
+    
+    if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function(position) {
+	    var pos = {
+		lat: parseFloat(position.coords.latitude),
+		lng: parseFloat(position.coords.longitude)
+	    };
+	    map.setCenter(pos);
+	    marker.setPosition(pos);
+	    circle.setCenter(pos);
+	    coordinates.value = "(" + pos.lat + ", " + pos.lng + ")"
+	});
+    }
 
     map.addListener("click", function(e) {
 	marker.setPosition(e.latLng);
@@ -38,7 +50,7 @@ var initMap = function initMap() {
 
     var radius = document.getElementById("radius")
     radius.addEventListener("input", function(e) {
-	var radiusInput = parseInt(radius.value);
+	var radiusInput = parseFloat(radius.value);
 	if (isNaN(radiusInput)){
 	    radiusInput = 0;
 	}
