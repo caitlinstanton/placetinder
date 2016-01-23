@@ -112,7 +112,7 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
     # Eliminate events that are not within the search radius
     i = 0
     while i < len(events):
-        if float(events[i]["distance"]) > radius:
+        if float(events[i]["distance"]) > float(radius):
             events.pop(i)
             i -= 1
         i += 1
@@ -135,6 +135,13 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
             minListedPrice = minListedPrice / rates[currencyCode]
             maxListedPrice = maxListedPrice / rates[currencyCode]
         if minListedPrice == 0 or maxPrice < minListedPrice or minPrice > maxListedPrice:
+            events.pop(i)
+            i -= 1
+        i += 1
+    # Eliminate events that do not have a description
+    i = 0
+    while i < len(events):
+        if not events[i].has_key("description"):
             events.pop(i)
             i -= 1
         i += 1

@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    print session["events"]
     return render_template("home.html")
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -71,14 +72,29 @@ def settings():
         if highPrice == -1 or lowPrice == -1:
             return render_template("settings.html", error = "Specify a price range")
         else:
-            events = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+            eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+            for i in eventsStubHub:
+                i["APIWebsite"] = "http://www.stubhub.com/"
+            query.clearTable("events")
+            numEvents = query.countEvents()
+            for i in eventsStubHub:
+                query.addEvent(i, numEvents)
+                numEvents += 1
+            session["searched"] = True
             return redirect("results")
     else:
         return render_template("settings.html")
 
 @app.route("/results")
 def results():
-    return render_template("results.html")
+    if session.has_key("searched") and session["searched"]:
+        events = query.getEvents()
+        if len(events) > 0:
+            return render_template("results.html", event = events[0])
+        else:
+            return render_template("results.html", message = "No events found")
+    else:
+        return redirect("settings")
 
 @app.route("/list")
 def list():
@@ -87,6 +103,8 @@ def list():
 @app.route("/logout")
 def logout():
     if session.has_key("loggedIn") and session["loggedIn"]:
+        session["username"] = ""
+        session["searched"] = False
         session["loggedIn"] = False
     return redirect("")
 
