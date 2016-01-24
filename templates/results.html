@@ -19,9 +19,17 @@
 	<p>{{event[3]}}</p>
 	<h4>Time and Date</h4>
 	<p>{{event[4]}}</p>
-	<h4>Price</h4>
-	<p>Minimum: ${{event[5]}}</p>
-	<p>Maximum: ${{event[6]}}</p>
+	<h4>Price Information</h4>
+	{% if event[5] == "" %}
+	<p>see website</p>
+	{% elif event[5] == "paid" %}
+	<p>Not free (see website)</p>
+	{% elif event[5] == "free" %}
+	<p>Free</p>
+	{% else %}
+	<p>Minimum: ${{event[5][:event[5].index(",")]}}</p>
+	<p>Maximum: ${{event[5][event[5].index(",")+1:]}}</p>
+	{% endif %}
 	{% endif %}
       </div>
       <br>

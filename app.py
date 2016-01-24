@@ -84,15 +84,18 @@ def settings():
             else:
                 eventbritePrice = "paid"
             eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-            #eventsEventbrite = eventbriteapi.search(eventType, coordinates, eventbritePrice, dateRange, "00:00:00")
-            ##add events from eventsEventbrite
+            eventsEventbrite = eventbriteapi.search(eventType, coordinates, radius, eventbritePrice, dateRange[:dateRange.index("--")], dateRange[dateRange.index("--")+2:])
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
+            for i in eventsEventbrite:
+                i["price"] = eventbritePrice
             query.clearTempevents(session["username"])
             for i in eventsStubHub:
-                query.addTempevent(i, session["username"])
-                session["searched"] = True
-                session["eventCounter"] = 0
+                query.addStubHubEvent(i, session["username"])
+            for i in eventsEventbrite:
+                query.addEventbriteEvent(i, session["username"])
+            session["searched"] = True
+            session["eventCounter"] = 0
             return redirect("results")
     else:
         return render_template("settings.html")

@@ -67,24 +67,44 @@ def authenticate(username, password):
     conn.close()
     return valid
     
-def addTempevent(eventDict, user):
+def addStubHubEvent(eventDict, user):
     """
-    Adds an temporary event to the database for a given user.
+    Adds a StubHub event to the temporary events database for a given user.
     Args:
-        eventDict (dict): A dictionary of an event as returned from an API.
+        eventDict (dict): A dictionary of an event as returned from the StubHub API.
         user (str): The user to assign the event to.
     """
     description = eventDict["description"].replace("'", "&#146;")
     apiWebsite = eventDict["APIWebsite"]
     url = apiWebsite + eventDict["eventUrl"]
     venue = eventDict["venue"]
-    location = venue["city"] + ", " + venue["state"] + ", " + venue["country"]
+    location = venue["city"].replace("'", "&#146;") + ", " + venue["state"] + ", " + venue["country"]
     datetime = eventDict["eventDateLocal"][:19].replace("T", ", ")
     minPrice = str(eventDict["ticketInfo"]["minPrice"])
     maxPrice = str(eventDict["ticketInfo"]["maxPrice"])
+    price = minPrice + "," + maxPrice
     conn = sqlite3.connect("data.db")
     c = conn.cursor()
-    q = "INSERT INTO tempevents VALUES('" + user + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + minPrice + "','" + maxPrice + "');"
+    q = "INSERT INTO tempevents VALUES('" + user + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + price + "');"
+    c.execute(q)
+    conn.commit()
+    conn.close()
+
+def addEventbriteEvent(eventDict, user):
+    """
+    Adds an Eventbrite event to the temporary events database for a given user.
+    Args:
+        eventDict (dict): A dictionary of an event as returned from the Eventbrite API.
+        user (str): The user to assign the event to.
+    """
+    description = eventDict["name"]["text"].replace("'", "&#146;")
+    url = eventDict["url"]
+    location = "see website"
+    datetime = eventDict["start"]["local"].replace("T", ", ")
+    price = eventDict["price"]
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "INSERT INTO tempevents VALUES('" + user + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + price + "');"
     c.execute(q)
     conn.commit()
     conn.close()
@@ -129,7 +149,7 @@ def addSavedevent(event, user):
     """
     conn = sqlite3.connect("data.db")
     c = conn.cursor()
-    q = "INSERT INTO savedevents VALUES('" + event[0] + "','" + event[1] + "','" + event[2] + "','" + event[3] + "','" + event[4] + "','" + event[5] + "','" + event[6] + "');"
+    q = "INSERT INTO savedevents VALUES('" + event[0] + "','" + event[1] + "','" + event[2] + "','" + event[3] + "','" + event[4] + "','" + event[5] + "');"
     c.execute(q)
     conn.commit()
     conn.close()
