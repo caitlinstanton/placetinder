@@ -7,10 +7,6 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.form.has_key("username") and request.form.has_key("password"):

@@ -153,3 +153,35 @@ def addSavedevent(event, user):
     c.execute(q)
     conn.commit()
     conn.close()
+
+def getSavedevents(user):
+    """
+    Returns a user's saved events.
+    Args:
+        user (str): The user to get events for.
+    Returns:
+        list: The events.
+    """
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    events = []
+    q = "SELECT * FROM savedevents WHERE user = '" + user + "';"
+    for i in c.execute(q):
+        events.append(i)
+    conn.commit()
+    conn.close()
+    return events
+
+def removeEvent(user, eventUrl):
+    """
+    Removes an event from the saved events database.
+    Args:
+        user: The user to remove the event for.
+        eventUrl: The URL of the event to remove (a unique identifier).
+    """
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "DELETE FROM savedevents WHERE user = '" + user + "' AND url = '" + eventUrl + "';"
+    c.execute(q)
+    conn.commit()
+    conn.close()

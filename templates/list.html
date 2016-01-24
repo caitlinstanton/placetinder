@@ -3,5 +3,20 @@
 {% block title %}List{% endblock %}
 
 {% block body %}
-List
+
+{% for event in events %}
+<div style="border-style: solid;">
+  <h3>Description</h3>
+  <p>{{event[1]}}</p>
+  <h3>Website</h3>
+  <p>{{event[2]}}</p>
+  <h3>Time and Date</h3>
+  <p>{{event[4]}}</p>
+  <form method="POST" id="form">
+    <button form="form" name="{{event[2]}}" type="submit">Remove from list</button>
+  </form>
+</div>
+<br>
+{% endfor %}
+
 {% endblock %}
