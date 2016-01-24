@@ -1,42 +1,32 @@
 import requests
-import os
-import csv
+import json,csv
 
-"""
-search(hashtag)
+EVENTBRITE_OAUTH_TOKEN = 'FN34EGTLTCYGHBDNRIKB'
+url = "https://www.eventbriteapi.com/v3/"
 
-Input:
-hashtag - String that will be searched for.
-
-Output:
-Returns nothing, but writes search results in tweets.csv.
-"""
-
-def search(type):
-  
-    EVENTBRITE_OAUTH_TOKEN = 'JYHSYPNUFM546GH2YJSO'
-
-    url = "https://www.eventbriteapi.com/v3/events/search.?popular=yes&token=JYHSYPNUFM546GH2YJSO"
-
-    res = requests.post(
-	    url,
+def search(query, coordinates, price, startDate,startTime):
+    res = requests.get(
+        url + "events/search/",
+	    headers = {"Authorization": "Bearer " + EVENTBRITE_OAUTH_TOKEN},
 	    params = {
-	        "event.online_event" : True,
+            "q": query,
+            "sort_by":"best",
+	        "venue.city": coordinates,
+			"price":price,
+			"start_date.range_start":startDate + "T" + startTime
 	    }
     )
 
-    print res['events']
-	
-    """
-    events = res.json()['events'][0]
-    with open('events.csv', 'wb') as csvfile:
+    queriedevents = res.json()["events"]
+
+    with open('eventbrite.csv', 'wb') as csvfile:
         spamwriter = csv.writer(csvfile)
-        for i in events:
-            content = i.name.text.encode('utf-8').strip() + "<br><br>"
-            spamwriter.writerow((content))
-            print i.name.text
-
-    """
-hashtag = raw_input("what hash do you want to search?\n")
-
-search(hashtag)
+        for event in queriedevents:
+            name = event['name']['text'].encode('utf-8').strip()
+            description = event["description"]["text"].encode('utf-8').strip() 
+            eventurl = event["url"]
+            startdate = event["start"]["local"]
+            enddate = event["end"]["local"]
+            spamwriter.writerow((name, description, eventurl, startdate, enddate))
+			
+search("concert","london","paid","2016-01-23","07:30:00")
