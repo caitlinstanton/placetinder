@@ -1,5 +1,10 @@
+
 from flask import Flask, render_template, request, flash, session, jsonify
-import EventbriteClient
+import eventbrite
+import client
+import model
+import os
+import json
 
 def eventbritecall(maxresults = 100, page = 1):
     if page > 1:
