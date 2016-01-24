@@ -20,7 +20,7 @@ def search(query, location, price, startDate,startTime):
     """
     res = requests.get(
         url + "events/search/",
-	    headers = {"Authorization": "Bearer " + EVENTBRITE_OAUTH_TOKEN},
+            headers = {"Authorization": "Bearer " + EVENTBRITE_OAUTH_TOKEN},
 	    params = {
             "q": query,
             "sort_by":"best",

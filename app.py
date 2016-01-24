@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request, session, redirect
-import query, stubhubapi
+import query, stubhubapi, eventbriteapi
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    print session["events"]
     return render_template("home.html")
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -54,38 +53,48 @@ def settings():
         coordinates = coordinates[1:len(coordinates)-1]
         highPrice = -1;
         lowPrice = -1;
+        freeEvents = False
+        paidEvents = False
         if request.form.has_key("$"):
             highPrice = 25
-			lowPrice = 0
-			eventbritePrice = "free"
+            freeEvents = True
         if request.form.has_key("$$"):
             highPrice = 50
-			lowPrice = 25
-			eventbritePrice = "paid"
+            paidEvents = True
         if request.form.has_key("$$$"):
             highPrice = 100
-			lowPrice = 50
-			eventbritePrice = "paid"
+            paidEvents = True
         if request.form.has_key("$$$$"):
             highPrice = 999999999
             lowPrice = 100
-			eventbritePrice = "paid"
-        if highPrice == -1 or lowPrice == -1:
+            paidEvents = True
+        if request.form.has_key("$$$"):
+            lowPrice = 50
+        if request.form.has_key("$$"):
+            lowPrice = 25
+        if request.form.has_key("$"):
+            lowPrice = 0
+        if highPrice == -1 or lowPrice == -1 or not (freeEvents or paidEvents):
             return render_template("settings.html", error = "Specify a price range")
         else:
+            if freeEvents and paidEvents:
+                eventbritePrice = ""
+            elif freeEvents:
+                eventbritePrice = "free"
+            else:
+                eventbritePrice = "paid"
             eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-            eventsEventbrite = eventbriteapi.search(eventType, coordinates, eventbritePrice, dateRange, "00:00:00")
-			
-			##add events from eventsEventbrite
-			for i in eventsStubHub:
+            #eventsEventbrite = eventbriteapi.search(eventType, coordinates, eventbritePrice, dateRange, "00:00:00")
+            ##add events from eventsEventbrite
+            for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
             query.clearTable("events")
             numEvents = query.countEvents()
             for i in eventsStubHub:
                 query.addEvent(i, numEvents)
                 numEvents += 1
-            session["searched"] = True
-            session["eventCounter"] = 0
+                session["searched"] = True
+                session["eventCounter"] = 0
             return redirect("results")
     else:
         return render_template("settings.html")
@@ -130,4 +139,4 @@ def logout():
 if __name__ == "__main__":
     app.debug = True
     app.secret_key = "secret_key"
-    app.run()
+    app.run(host='0.0.0.0',port=8000)
