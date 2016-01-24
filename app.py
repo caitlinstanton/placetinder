@@ -127,7 +127,11 @@ def results():
 
 @app.route("/list")
 def list():
-    return render_template("list.html")
+    if session.has_key("loggedIn") and session["loggedIn"]:
+        events = query.getSavedevents(session["username"])
+        return render_template("list.html", events = events)
+    else:
+        return render_template("login.html")
 
 @app.route("/logout")
 def logout():

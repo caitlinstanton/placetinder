@@ -3,5 +3,17 @@
 {% block title %}List{% endblock %}
 
 {% block body %}
-List
+
+{% for event in events %}
+<div style="border-style: solid;">
+  <h3>Description</h3>
+  {{event[1]}}
+  <h3>Website</h3>
+  {{event[2]}}
+  <h3>Time and Date</h3>
+  {{event[4]}}
+</div>
+<br>
+{% endfor %}
+
 {% endblock %}
