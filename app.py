@@ -125,11 +125,16 @@ def results():
     else:
         return redirect("settings")
 
-@app.route("/list")
+@app.route("/list", methods = ["GET", "POST"])
 def list():
     if session.has_key("loggedIn") and session["loggedIn"]:
-        events = query.getSavedevents(session["username"])
-        return render_template("list.html", events = events)
+        if len(request.form) == 0:
+            events = query.getSavedevents(session["username"])
+            return render_template("list.html", events = events)
+        elif len(request.form) == 1:
+            query.removeEvent(session["username"], request.form.keys()[0])
+            events = query.getSavedevents(session["username"])
+            return render_template("list.html", events = events)
     else:
         return render_template("login.html")
 
