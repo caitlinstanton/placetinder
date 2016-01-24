@@ -56,24 +56,28 @@ def settings():
         lowPrice = -1;
         if request.form.has_key("$"):
             highPrice = 25
+			lowPrice = 0
+			eventbritePrice = "free"
         if request.form.has_key("$$"):
             highPrice = 50
+			lowPrice = 25
+			eventbritePrice = "paid"
         if request.form.has_key("$$$"):
             highPrice = 100
+			lowPrice = 50
+			eventbritePrice = "paid"
         if request.form.has_key("$$$$"):
             highPrice = 999999999
             lowPrice = 100
-        if request.form.has_key("$$$"):
-            lowPrice = 50
-        if request.form.has_key("$$"):
-            lowPrice = 25
-        if request.form.has_key("$"):
-            lowPrice = 0
+			eventbritePrice = "paid"
         if highPrice == -1 or lowPrice == -1:
             return render_template("settings.html", error = "Specify a price range")
         else:
             eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-            for i in eventsStubHub:
+            eventsEventbrite = eventbriteapi.search(eventType, coordinates, eventbritePrice, dateRange, "00:00:00")
+			
+			##add events from eventsEventbrite
+			for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
             query.clearTable("events")
             numEvents = query.countEvents()
