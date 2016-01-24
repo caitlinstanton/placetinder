@@ -1,0 +1,11 @@
+{% extends "home.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block active %}
+<li><a href="home">Home</a></li>
+<li class="active"><a href="#">About</a></li>
+{% if session["loggedIn"] %}
+<li><a href="settings">Choose</a></li>
+{% endif %}
+{% endblock %}

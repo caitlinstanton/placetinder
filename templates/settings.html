@@ -4,73 +4,77 @@
 
 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-datetimepicker.min.css">
 
+{% block active %}
+<li><a href="/">Home</a></li>
+<li><a href="about">About</a></li>
+{% if session["loggedIn"] %}
+<li class="active"><a href="#">Choose</a></li>
+{% endif %}
+{% endblock %}
+
 {% block body %}
-<div class="container" id="home">
+<div class="container" id="other">
   <div align="center">
-    <div style="margin-top:5%">
-      <h2 class="type"><u>Settings</u></h2>
+    <br><br><br>
+    <h2 class="type"><u>Settings</u></h2>
 
-      {% if error %}
-      <h4 class="type" style="color:red;">{{error}}</h4>
-      {% endif %}
-      
-      <div class="container type" style="margin-top:2%">
-	<div class="col-md-4 col-md-offset-4">
+    {% if error %}
+    <h4 class="type" style="color:red;">{{error}}</h4>
+    {% endif %}
+    
+    <div class="container type" style="margin-top:2%">
+      <div class="col-md-4 col-md-offset-4">
+	
+	<form method="POST">
 	  
-	  <form method="POST">
-	    
-	    <div class="form-group">
-	      <h3>Price</h3>
-	      <label class="checkbox-inline">
-		<input type="checkbox" name="$" value="">$
-	      </label>
-	      <label class="checkbox-inline">
-		<input type="checkbox" name="$$" value="">$$
-	      </label>
-	      <label class="checkbox-inline">
-		<input type="checkbox" name="$$$" value="">$$$
-	      </label>
-	      <label class="checkbox-inline">
-		<input type="checkbox" name="$$$$" value="">$$$$
-	      </label>
-	    </div>
-	    <div class="form-group">
-	      <h3>Type</h3>
-	      <input type="text" class="form-control input-lg" name="type" placeholder="all types">
-	    </div>
-	    <br>
-	    <div class="form-group">
-	      <h3>Date Range (yyyy-mm-dd--yyyy-mm-dd for now)</h3>
-              <div class="input-group date" id="datetimepicker1">
-		<input type="text" class="form-control" name="date">
-		<span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-		</span>
-              </div>
-	    </div>
-	    <br>
+	  <div class="form-group">
+	    <h3>Price</h3>
+	    <label class="checkbox-inline">
+	      <input type="checkbox" name="$" value="">$
+	    </label>
+	    <label class="checkbox-inline">
+	      <input type="checkbox" name="$$" value="">$$
+	    </label>
+	    <label class="checkbox-inline">
+	      <input type="checkbox" name="$$$" value="">$$$
+	    </label>
+	    <label class="checkbox-inline">
+	      <input type="checkbox" name="$$$$" value="">$$$$
+	    </label>
+	  </div>
+	  <div class="form-group">
+	    <h3>Type</h3>
+	    <input type="text" class="form-control input-lg" name="type" placeholder="all types">
+	  </div>
+	  <br>
+	  <div class="form-group">
+	    <h3>Date Range (yyyy-mm-dd--yyyy-mm-dd for now)</h3>
+            <div class="input-group date" id="datetimepicker1">
+	      <input type="text" class="form-control" name="date">
+	      <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+	      </span>
+            </div>
+	  </div>
+	  <br>
 
-	    <div id="map" style="width: 250px; height: 200px">
-	    </div>
-
-	    <input id="coordinates" type="hidden" name="coordinates" value="">
-	    
+	  <div id="map" style="width: 250px; height: 200px">
+	  </div>
+	  <input id="coordinates" type="hidden" name="coordinates" value="">
 	    <h3>Radius (miles)</h3>
 	    <input id="radius" type="text" class="form-control" name="radius" value="20">
+	  <div class="buttons" style="margin-top:5%">
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!" style="float:left">
+	  </div>
 
-	    <div class="buttons" style="margin-top:5%">
-	      <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Let's Go!" style="float:left">
-	    </div>
+	</form>
 
-	  </form>
-
-	  <form method="POST">
-	    <div class="buttons" style="margin-top:5%">
-	      <input class="btn btn-warning btn-lg" type="submit" name="random" value="Randomize">
-	    </div>
-	  </form>
-	  
-	</div>
+	<form method="POST">
+	  <div class="buttons" style="margin-top:5%; margin-bottom:5%">
+	    <input class="btn btn-warning btn-lg" type="submit" name="random" value="Randomize">
+	  </div>
+	</form>
+	
       </div>
     </div>
   </div>
