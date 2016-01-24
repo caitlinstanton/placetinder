@@ -88,11 +88,9 @@ def settings():
             ##add events from eventsEventbrite
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
-            query.clearTable("events")
-            numEvents = query.countEvents()
+            query.clearTempevents(session["username"])
             for i in eventsStubHub:
-                query.addEvent(i, numEvents)
-                numEvents += 1
+                query.addTempevent(i, session["username"])
                 session["searched"] = True
                 session["eventCounter"] = 0
             return redirect("results")
@@ -102,7 +100,7 @@ def settings():
 @app.route("/results", methods = ["GET", "POST"])
 def results():
     if session.has_key("searched") and session["searched"]:
-        events = query.getEvents()
+        events = query.getTempevents(session["username"])
         if request.form.has_key("reject"):
             session["eventCounter"] += 1
             if len(events) > session["eventCounter"]:
@@ -110,6 +108,7 @@ def results():
             else:
                 return render_template("results.html", message = "No events remaining")
         elif request.form.has_key("accept"):
+            query.addSavedevent(events[session["eventCounter"]], session["username"])
             session["eventCounter"] += 1
             if len(events) > session["eventCounter"]:
                 return render_template("results.html", event = events[session["eventCounter"]])

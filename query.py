@@ -66,29 +66,13 @@ def authenticate(username, password):
     conn.commit()
     conn.close()
     return valid
-
-def countEvents():
-    """
-    Counts the number of events in the database.
-    Returns:
-        int: The number of events.
-    """
-    conn = sqlite3.connect("data.db")
-    c = conn.cursor()
-    q = "SELECT id FROM events;"
-    numEvents = 0
-    for i in c.execute(q):
-        numEvents += 1
-    conn.commit()
-    conn.close()
-    return numEvents
     
-def addEvent(eventDict, eventNum):
+def addTempevent(eventDict, user):
     """
-    Adds an event to the event database.
+    Adds an temporary event to the database for a given user.
     Args:
         eventDict (dict): A dictionary of an event as returned from an API.
-        eventNum (int): The number to assign to the event.
+        user (str): The user to assign the event to.
     """
     description = eventDict["description"].replace("'", "&#146;")
     apiWebsite = eventDict["APIWebsite"]
@@ -100,36 +84,52 @@ def addEvent(eventDict, eventNum):
     maxPrice = str(eventDict["ticketInfo"]["maxPrice"])
     conn = sqlite3.connect("data.db")
     c = conn.cursor()
-    q = "INSERT INTO events VALUES('" + str(eventNum) + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + minPrice + "','" + maxPrice + "');"
+    q = "INSERT INTO tempevents VALUES('" + user + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + minPrice + "','" + maxPrice + "');"
     c.execute(q)
     conn.commit()
     conn.close()
     
-def clearTable(table):
+def clearTempevents(user):
     """
-    Clears the data from a table.
+    Clears the temporary events for a given user.
     Args:
-        table (str): The name of the table to clear.
+        user (str): The name of the user.
     """
     conn = sqlite3.connect("data.db")
     c = conn.cursor()
-    q = "DELETE FROM " + table + ";"
+    q = "DELETE FROM tempevents WHERE user = '" + user + "';"
     c.execute(q)
     conn.commit()
     conn.close()
 
-def getEvents():
+def getTempevents(user):
     """
-    Returns the events in the database.
+    Returns the temporary events in the database for a given user.
+    Args:
+        user (str): The user to get events for.
     Returns:
         list: The events.
     """
     conn = sqlite3.connect("data.db")
     c = conn.cursor()
     events = []
-    q = "SELECT * FROM events;"
+    q = "SELECT * FROM tempevents WHERE user = '" + user + "';"
     for i in c.execute(q):
         events.append(i)
     conn.commit()
     conn.close()
     return events
+
+def addSavedevent(event, user):
+    """
+    Adds an event to the user's list of saved events.
+    Args:
+        event (list): The necessary information from the event.
+        user (str): The username.
+    """
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "INSERT INTO savedevents VALUES('" + event[0] + "','" + event[1] + "','" + event[2] + "','" + event[3] + "','" + event[4] + "','" + event[5] + "','" + event[6] + "');"
+    c.execute(q)
+    conn.commit()
+    conn.close()

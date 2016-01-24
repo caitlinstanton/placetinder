@@ -7,7 +7,10 @@ c = conn.cursor()
 q = "CREATE TABLE users(name text, password text, email text)"
 c.execute(q)
 
-q = "CREATE TABLE events(id Integer, description text, url text, location text, datetime text, minPrice text, maxPrice text)"
+q = "CREATE TABLE tempevents(user test, description text, url text, location text, datetime text, minPrice text, maxPrice text)"
+c.execute(q)
+
+q = "CREATE TABLE savedevents(user text, description text, url text, location text, datetime text, minPrice text, maxPrice text)"
 c.execute(q)
 
 conn.commit()
