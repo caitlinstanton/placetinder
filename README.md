@@ -24,18 +24,10 @@
   - Liked events will be added to a to-do list
 - Events on the to-do list will have all of the information for the event, including its name, description, date/time, location, and link to the site where you can purchase tickets, book a reservation, etc.
 
-<h2>Technologies</h2>
-- HTML/CSS
-- JavaScript
-- Python
-- APIs:
-  - Yelp
-  - StubHub
-  - Eventbrite
-  - Google Maps (for geolocation)
-- Hosted on Digital Ocean
-
 <h2>How to Run</h2>
+<b>ONLINE:</b>
+Connect to the web app through either <a href="http://placetinder.mooo.com">our site</a> or <a href="http://162.243.17.138">the IP address</a>, create an account or sign in, and see Place Tinder at work!
+<b>LOCALLY:</b>
 1. Install the following libraries using 'pip install'
   - Flask
   - sqlite3
@@ -54,6 +46,17 @@
 3. Navigate to 'localhost:8000'
 4. Sign in or create an account
 5. Experience placetinder!
+
+<h2>Technologies</h2>
+- HTML/CSS
+- JavaScript
+- Python
+- APIs:
+  - Yelp
+  - StubHub
+  - Eventbrite
+  - Google Maps (for geolocation)
+- Hosted on Digital Ocean
 
 <h2>In the Future</h2>
 - User can manually add events to to-do list
@@ -84,4 +87,7 @@ Results displayed
 To-do list functionality created
 <br>
 01/24
-Final touches
+Final touches, connected to DigitalOcean and created URL
+<br>
+01/25
+VICTORY!
