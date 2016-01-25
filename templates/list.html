@@ -13,13 +13,13 @@
 {% block body %}
 <div id="other">
   <p id="top"></p>
-
-  <div class="container col-md-6 col-md-offset-3" style="margin-top:7%">
+	<div align="center">
+  <div style="margin-top:7%; width:70%">
     {% for event in events %}
     <div class="boxed" align="center">
-      <h2>{{event[1]}}</h2>
+      <h2>{{event[1].replace("&#146;", "'")}}</h2>
       <hr>
-      <a>{{event[2]}}</a>
+      <a href="{{event[2]}}">{{event[2]}}</a>
       <hr>
       <h3><u>Time and Date</u></h3>
       <p>{{event[4]}}</p>

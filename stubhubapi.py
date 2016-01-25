@@ -106,23 +106,7 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
             i -= 1
         i += 1
     # Eliminate events that do not match the price
-    i = 0
-    otherCurrencies = []
     while i < len(events):
-        currencyCode = events[i]["ticketInfo"]["currencyCode"]
-        if currencyCode != "USD" and not currencyCode in otherCurrencies:
-            otherCurrencies.append(currencyCode)
-        i += 1
-    if len(otherCurrencies) > 0:
-        rates = getRates(otherCurrencies)
-    i = 0
-    while i < len(events):
-        currencyCode = events[i]["ticketInfo"]["currencyCode"]
-        minListedPrice = float(events[i]["ticketInfo"]["minPrice"])
-        maxListedPrice = float(events[i]["ticketInfo"]["maxPrice"])
-        if currencyCode != "USD":
-            minListedPrice = minListedPrice / rates[currencyCode]
-            maxListedPrice = maxListedPrice / rates[currencyCode]
         if minListedPrice == 0 or maxPrice < minListedPrice or minPrice > maxListedPrice:
             events.pop(i)
             i -= 1

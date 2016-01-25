@@ -92,7 +92,8 @@ def settings():
             else:
                 eventbritePrice = "paid"
             try:
-                eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+                #eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+                eventsStubHub = []
             except:
                 eventsStubHub = []
             try:
@@ -103,6 +104,8 @@ def settings():
                 eventsYelp = yelpapi.search(eventType, coordinates, radius)["businesses"]
             except:
                 eventsYelp = []
+            if len(eventsStubHub) > 100:
+                eventsStubHub = eventsStubHub[:100]
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
                 i["APIFrom"] = "StubHub" 
@@ -121,7 +124,7 @@ def settings():
             shuffle(allEvents)
             query.clearTempevents(session["username"])
             for i in allEvents:
-                if i["APIFrom"] == "Stubhub":
+                if i["APIFrom"] == "StubHub":
                     query.addStubHubEvent(i, session["username"])
                 if i["APIFrom"] == "Eventbrite": 
                     query.addEventbriteEvent(i, session["username"])
