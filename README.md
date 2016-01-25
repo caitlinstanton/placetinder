@@ -13,41 +13,54 @@
 <p>Place Tinder helps users find places to go and events to see by selecting random events after the user puts in specifications.</p>
 
 <h2>User Flow</h2>
-- User creates an account (with their email to get notifications?)
+- User creates an account
 - User puts in specifications for what they want to go to:
   - Type of event
   - Price
-  - Location (and distance from)
+  - Location (obtained through geolocation), and distance from location
   - Date range
-- App generates random results from all of the APIs that fit those specifications
+- App generates random results that fit those specifications from all of the APIs
 - Results are shown one at a time, and user is given the choice to either reject or attend events
   - Liked events will be added to a to-do list
-- Events on the to-do list will lead to the site where you can purchase tickets, book a reservation, etc.
+- Events on the to-do list will have all of the information for the event, including its name, description, date/time, location, and link to the site where you can purchase tickets, book a reservation, etc.
 
 <h2>Technologies</h2>
-<strong>Things We Know</strong>
 - HTML/CSS
 - JavaScript
 - Python
-
-<strong>Things We Can Figure Out</strong>
-- Handlebars (or other UX framework)
 - APIs:
   - Yelp
   - StubHub
   - Eventbrite
-  - Google Maps
-  - Sendgrid
+  - Google Maps (for geolocation)
+- Hosted on Digital Ocean
 
-<strong>Ehhh</strong>
-- Geolocation
-- Digital Ocean server thing
+<h2>How to Run</h2>
+1. Install the following libraries using 'pip install'
+  - Flask
+  - sqlite3
+  - hashlib
+  - urllib2
+  - json
+  - module
+  - argparse
+  - pprint
+  - sys
+  - urllib
+  - oauth2
+  - random
+  - requests
+2. Run 'python app.py' in your terminal
+3. Navigate to 'localhost:8000'
+4. Sign in or create an account
+5. Experience placetinder!
 
-<h2>Additional Features</h2>
-- Set up a server on Digital Ocean
+<h2>In the Future</h2>
 - User can manually add events to to-do list
 - More specifications to choose events
 - Suggest it to a friend
+- Notifications for upcoming events on to-do list (Twilio, Sendgrid)
+- Suggested events
 
 <h2>CHANGELOG</h2>
 12/21
@@ -57,11 +70,18 @@ Created routes and templates
 User can create an account and log in
 <br>
 01/06
-Used JavaScript to display all future events with Eventbrite (CS)
+Used JavaScript to display all future events with Eventbrite
 Homepage styling
 <br>
 01/13
 Yelp API completed
 Stubhub API completed
 Login/create styling
-
+<br>
+01/23
+Eventbrite API completed
+Results displayed
+To-do list functionality created
+<br>
+01/24
+Final touches
