@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect
 import query, stubhubapi, eventbriteapi, yelpapi
+from random import shuffle
 
 app = Flask(__name__)
 
@@ -102,22 +103,28 @@ def settings():
                 eventsYelp = []
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
+                i["APIFrom"] = "StubHub" 
             for i in eventsEventbrite:
                 i["price"] = eventbritePrice
+                i["APIFrom"] = "Eventbrite"
             i = 0
             while i < len(eventsYelp):
+                eventsYelp[i]["APIFrom"] = "Yelp"
                 locDict = eventsYelp[i]["location"]
                 if not (locDict.has_key("city") and locDict.has_key("state_code") and locDict.has_key("country_code")):
                     eventsYelp.pop(i)
                     i -= 1
                 i += 1
+            allEvents = eventsStubHub + eventsEventbrite + eventsYelp
+            shuffle(allEvents)
             query.clearTempevents(session["username"])
-            for i in eventsStubHub:
-                query.addStubHubEvent(i, session["username"])
-            for i in eventsEventbrite:
-                query.addEventbriteEvent(i, session["username"])
-            for i in eventsYelp:
-                query.addYelpEvent(i, session["username"])
+            for i in allEvents:
+                if i["APIFrom"] == "Stubhub":
+                    query.addStubHubEvent(i, session["username"])
+                if i["APIFrom"] == "Eventbrite": 
+                    query.addEventbriteEvent(i, session["username"])
+                if i["APIFrom"] == "Yelp": 
+                    query.addYelpEvent(i, session["username"])
             session["searched"] = True
             session["eventCounter"] = 0
             return redirect("results")
