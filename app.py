@@ -57,6 +57,8 @@ def settings():
         radius = request.form["radius"]
         coordinates = request.form["coordinates"].replace(" ", "")
         coordinates = coordinates[1:len(coordinates)-1]
+        if coordinates == "":
+            coordinates = "40.71,-74.01"
         highPrice = -1;
         lowPrice = -1;
         freeEvents = False
