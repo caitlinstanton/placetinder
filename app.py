@@ -53,6 +53,7 @@ def settings():
     if request.form.has_key("submit"):
         eventType = request.form["type"]
         dateRange = request.form["date"]
+        #dateRange = request.form["year1"]+"-"+request.form["month1"]+"-"+request.form["day1"]+"--"+request.form["year2"]+"-"+request.form["month2"]+"-"+request.form["day2"]
         radius = request.form["radius"]
         coordinates = request.form["coordinates"].replace(" ", "")
         coordinates = coordinates[1:len(coordinates)-1]

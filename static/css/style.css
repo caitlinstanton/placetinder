@@ -62,3 +62,15 @@ u {
     border-bottom: 2px solid rgb(247,187,82);
 }​
 
+#fit {
+    display: flex;
+    justify-content: space-between;
+}
+
+#fit div:first-child {
+    border-left: 0;
+}
+
+#fit div:last-child {
+    border-right: 0;
+}
