@@ -12,29 +12,9 @@
   <div align="center">
     <div style="margin-top:10%">
       <h1 class="type"><u>Login</u></h1>
+
       {% if error %}
-      <!--
-      <br>
-      <h2>{{error}}</h2>
-      <br>
-      -->
-      <div id="errorModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-	  
-	  <div class="modal-content">
-	    <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-	    </div>
-	    <div class="modal-body">
-              <h1>Error</h1>
-	    </div>
-	    <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	    </div>
-	  </div>
-	  
-	</div>
-      </div>
+      <h4 class="type" style="color:red;">{{error}}</h4>
       {% endif %}
       
       <form method="POST">
