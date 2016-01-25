@@ -23,7 +23,7 @@ def search(query, coordinates, radius, price, startDate, endDate):
         url + "events/search/",
             headers = {"Authorization": "Bearer " + EVENTBRITE_OAUTH_TOKEN},
 	    params = {
-            "q": query,
+            "q": query.replace(" ", "+"),
             "sort_by": "best",
             "location.latitude": coordinates[:coordinates.index(",")],
             "location.longitude": coordinates[coordinates.index(",")+1:],

@@ -108,6 +108,26 @@ def addEventbriteEvent(eventDict, user):
     c.execute(q)
     conn.commit()
     conn.close()
+
+def addYelpEvent(eventDict, user):
+    """
+    Adds an Eventbrite event to the temporary events database for a given user.
+    Args:
+        eventDict (dict): A dictionary of an event as returned from the Eventbrite API.
+        user (str): The user to assign the event to.
+    """
+    description = eventDict["name"].replace("'", "&#146;")
+    url = eventDict["url"]
+    locDict = eventDict["location"]
+    location = locDict["city"].replace("'", "&#146;") + ", " + locDict["state_code"] + ", " + locDict["country_code"]
+    datetime = "see website"
+    price = ""
+    conn = sqlite3.connect("data.db")
+    c = conn.cursor()
+    q = "INSERT INTO tempevents VALUES('" + user + "','" + description + "','" + url + "','" + location + "','" + datetime + "','" + price + "');"
+    c.execute(q)
+    conn.commit()
+    conn.close()
     
 def clearTempevents(user):
     """

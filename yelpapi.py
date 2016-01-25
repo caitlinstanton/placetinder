@@ -70,19 +70,20 @@ def requestf(host, path, url_params=None):
     return response
 
 
-def search(term, location):
-    """Query the Search API by a search term and location.
+def search(term, coordinates, radius):
+    """Query the Search API by a search term, coordinates, and radius.
     Args:
         term (str): The search term passed to the API.
-        location (str): The search location passed to the API.
+        coordinates (str): The latitude and longitude, separated by a comma.
+        radius (str): The radius to search within, in miles.
     Returns:
         dict: The JSON response from the request.
     """
 
     url_params = {
         'term': term.replace(' ', '+'),
-        'location': location.replace(' ', '+'),
-        'limit': SEARCH_LIMIT
+        'll': coordinates,
+        'radius_filter': str(float(radius) / 1609.34)
     }
     return requestf(API_HOST, SEARCH_PATH, url_params=url_params)
 
