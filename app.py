@@ -183,7 +183,7 @@ def logout():
         session["loggedIn"] = False
     return redirect("")
 
-app.secret_key = "secretsecret"
+app.secret_key = "secret"
 if __name__ == "__main__":
     app.debug = True
     app.run(host='0.0.0.0',port=8000)
