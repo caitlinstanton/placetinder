@@ -42,6 +42,7 @@
 	{% endif %}
       </div>
       <br>
+      {% if event %}
       <form method="POST" id="form">
 	<button form="form" name="reject" type="submit" class="btn btn-warning btn-lg">
 	  <span class="glyphicon glyphicon-remove"></span>
@@ -50,6 +51,7 @@
 	  <span class="glyphicon glyphicon-ok"></span>
 	</button>
       </form>
+      {% endif %}
     </div>
   </div>
 </div>
