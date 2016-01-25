@@ -62,7 +62,9 @@
 	</div>
 	{% if session["loggedIn"] %}
 	<div class="buttons" style="margin-top:5%">
-	  <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Logout">
+	  <form action="logout">
+	    <input class="btn btn-warning btn-lg" type="submit" name="submit" value="Logout">
+	  </form>
 	</div>
 	{% else %}
 	<form method="POST" action="login">
