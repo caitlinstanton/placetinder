@@ -27,9 +27,9 @@
 <h2>How to Run</h2>
 <b>ONLINE:</b>
 Connect to the web app through either <a href="http://placetinder.mooo.com">our site</a> or <a href="http://162.243.17.138">the IP address</a>, create an account or sign in, and see Place Tinder at work!
-<br>
+<br><br>
 <b>LOCALLY:</b>
-1. Install the following libraries using 'pip install'
+1. Install the following libraries using 'pip install':
   - Flask
   - sqlite3
   - hashlib
