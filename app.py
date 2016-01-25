@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, session, redirect
 import query, stubhubapi, eventbriteapi, yelpapi
+from random import shuffle
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
     return render_template("home.html")
-
+    
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -25,7 +26,7 @@ def login():
             return redirect("settings")
         else:
             return render_template("login.html")
-
+                 
 @app.route("/create", methods = ["GET", "POST"])
 def create():
     if session.has_key("loggedIn") and session["loggedIn"]:
@@ -46,12 +47,13 @@ def create():
                     return render_template("create.html", error = "Username already exists")
         else:
             return render_template("create.html")
-
+ 
 @app.route("/settings", methods = ["GET", "POST"])
 def settings():
     if request.form.has_key("submit"):
         eventType = request.form["type"]
         dateRange = request.form["date"]
+        #dateRange = request.form["year1"]+"-"+request.form["month1"]+"-"+request.form["day1"]+"--"+request.form["year2"]+"-"+request.form["month2"]+"-"+request.form["day2"]
         radius = request.form["radius"]
         coordinates = request.form["coordinates"].replace(" ", "")
         coordinates = coordinates[1:len(coordinates)-1]
@@ -103,28 +105,34 @@ def settings():
                 eventsYelp = []
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
+                i["APIFrom"] = "StubHub" 
             for i in eventsEventbrite:
                 i["price"] = eventbritePrice
+                i["APIFrom"] = "Eventbrite"
             i = 0
             while i < len(eventsYelp):
+                eventsYelp[i]["APIFrom"] = "Yelp"
                 locDict = eventsYelp[i]["location"]
                 if not (locDict.has_key("city") and locDict.has_key("state_code") and locDict.has_key("country_code")):
                     eventsYelp.pop(i)
                     i -= 1
                 i += 1
+            allEvents = eventsStubHub + eventsEventbrite + eventsYelp
+            shuffle(allEvents)
             query.clearTempevents(session["username"])
-            for i in eventsStubHub:
-                query.addStubHubEvent(i, session["username"])
-            for i in eventsEventbrite:
-                query.addEventbriteEvent(i, session["username"])
-            for i in eventsYelp:
-                query.addYelpEvent(i, session["username"])
+            for i in allEvents:
+                if i["APIFrom"] == "Stubhub":
+                    query.addStubHubEvent(i, session["username"])
+                if i["APIFrom"] == "Eventbrite": 
+                    query.addEventbriteEvent(i, session["username"])
+                if i["APIFrom"] == "Yelp": 
+                    query.addYelpEvent(i, session["username"])
             session["searched"] = True
             session["eventCounter"] = 0
             return redirect("results")
     else:
         return render_template("settings.html")
-
+ 
 @app.route("/results", methods = ["GET", "POST"])
 def results():
     if session.has_key("searched") and session["searched"]:
@@ -149,7 +157,7 @@ def results():
                 return render_template("results.html", message = "No events found")
     else:
         return redirect("settings")
-
+ 
 @app.route("/list", methods = ["GET", "POST"])
 def list():
     if session.has_key("loggedIn") and session["loggedIn"]:
@@ -162,7 +170,7 @@ def list():
             return render_template("list.html", events = events)
     else:
         return render_template("login.html")
-
+ 
 @app.route("/logout")
 def logout():
     if session.has_key("loggedIn") and session["loggedIn"]:
@@ -170,9 +178,9 @@ def logout():
         session["searched"] = False
         session["eventCounter"] = 0
         session["loggedIn"] = False
-    return redirect("")
-
+        return redirect("")
+ 
 app.secret_key = "secretsecret"
 if __name__ == "__main__":
-    app.debug = True
-    app.run(host='0.0.0.0',port=8000)
+     app.debug = True
+     app.run(host='0.0.0.0',port=8000)

@@ -4,7 +4,6 @@
 
 {% block active %}
 <li><a href="/">Home</a></li>
-<li><a href="about">About</a></li>
 {% if session["loggedIn"] %}
 <li><a href="settings">Choose</a></li>
 <li class="active"><a href="#">Your List</a></li>
@@ -20,7 +19,7 @@
     <div class="boxed" align="center">
       <h2>{{event[1]}}</h2>
       <hr>
-      <p>{{event[2]}}</p>
+      <a>{{event[2]}}</a>
       <hr>
       <h3><u>Time and Date</u></h3>
       <p>{{event[4]}}</p>
