@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-import query, stubhubapi, eventbriteapi
+import query, stubhubapi, eventbriteapi, yelpapi
 
 app = Flask(__name__)
 
@@ -87,17 +87,36 @@ def settings():
                 eventbritePrice = "free"
             else:
                 eventbritePrice = "paid"
-            eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-            eventsEventbrite = eventbriteapi.search(eventType, coordinates, radius, eventbritePrice, dateRange[:dateRange.index("--")], dateRange[dateRange.index("--")+2:])
+            try:
+                eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
+            except:
+                eventsStubHub = []
+            try:
+                eventsEventbrite = eventbriteapi.search(eventType, coordinates, radius, eventbritePrice, dateRange[:dateRange.index("--")], dateRange[dateRange.index("--")+2:])
+            except:
+                eventsEventbrite = []
+            try:
+                eventsYelp = yelpapi.search(eventType, coordinates, radius)["businesses"]
+            except:
+                eventsYelp = []
             for i in eventsStubHub:
                 i["APIWebsite"] = "http://www.stubhub.com/"
             for i in eventsEventbrite:
                 i["price"] = eventbritePrice
+            i = 0
+            while i < len(eventsYelp):
+                locDict = eventsYelp[i]["location"]
+                if not (locDict.has_key("city") and locDict.has_key("state_code") and locDict.has_key("country_code")):
+                    eventsYelp.pop(i)
+                    i -= 1
+                i += 1
             query.clearTempevents(session["username"])
             for i in eventsStubHub:
                 query.addStubHubEvent(i, session["username"])
             for i in eventsEventbrite:
                 query.addEventbriteEvent(i, session["username"])
+            for i in eventsYelp:
+                query.addYelpEvent(i, session["username"])
             session["searched"] = True
             session["eventCounter"] = 0
             return redirect("results")

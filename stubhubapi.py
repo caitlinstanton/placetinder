@@ -96,7 +96,7 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
         urllib2.HTTPError: An error occurs from the HTTP request.
     """
     # Gets the unfiltered events from the API
-    r = searchHelper(0, query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
+    r = searchHelper(0, query.replace(" ", "+"), coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
     numFound = r["numFound"]
     if numFound == 0:
         numRequests = 0
