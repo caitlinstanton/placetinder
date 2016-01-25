@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
- import query, stubhubapi, eventbriteapi, yelpapi
+import query, stubhubapi, eventbriteapi, yelpapi
  
  app = Flask(__name__)
  
