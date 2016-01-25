@@ -29,6 +29,7 @@
 Connect to the web app through either <a href="http://placetinder.mooo.com">our site</a> or <a href="http://162.243.17.138">the IP address</a>, create an account or sign in, and see Place Tinder at work!
 <br><br>
 <b>LOCALLY:</b>
+<br>
 1. Install the following libraries using 'pip install':
   - Flask
   - sqlite3
@@ -92,3 +93,7 @@ Final touches, connected to DigitalOcean and created URL
 <br>
 01/25
 VICTORY!
+
+<h2>Bugs</h2>
+- Some of the events displayed on the results page are too large, so you have to zoom out on the screen to see the whole display. The scroll function isn't enabled on the results.html page.
+- StubHub events are only being displayed when placetinder is run on 'localhost:8000'
