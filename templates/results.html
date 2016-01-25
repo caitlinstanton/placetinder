@@ -1,25 +1,34 @@
 {% extends "home.html" %}
 
-{% block title %}Title{% endblock %}
+{% block title %}Results{% endblock %}
+
+{% block active %}
+<li><a href="/">Home</a></li>
+<li><a href="about">About</a></li>
+{% if session["loggedIn"] %}
+<li class="active"><a href="settings">Choose</a></li>
+<li><a href="list">Your List</a></li>
+{% endif %}
+{% endblock %}
 
 {% block body %}
 <div id="home">
   <div align="center">
-    <div class="container col-md-4 col-md-offset-4" style="margin-top:10%" align="center">
-      <div class="boxed">
+    <div class="container col-md-4 col-md-offset-4" style="margin-top:7%" align="center">
+      <div class="boxed" style="color:rgb(255,255,255)">
 	{% if message %}
 	<h4>{{message}}</h4>
 	{% endif %}
 	{% if event %}
-	<h4>Description</h4>
-	<p>{{event[1]}}</p>
-	<h4>Website</h4>
+	<h2>{{event[1]}}</h2>
+	<hr>
 	<p>{{event[2]}}</p>
-	<h4>Location</h4>
+	<hr>
+	<h4><u>Location</u></h4>
 	<p>{{event[3]}}</p>
-	<h4>Time and Date</h4>
+	<h4><u>Time and Date</u></h4>
 	<p>{{event[4]}}</p>
-	<h4>Price Information</h4>
+	<h4><u>Price Information</u></h4>
 	{% if event[5] == "" %}
 	<p>see website</p>
 	{% elif event[5] == "paid" %}

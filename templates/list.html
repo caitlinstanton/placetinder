@@ -2,21 +2,40 @@
 
 {% block title %}List{% endblock %}
 
+{% block active %}
+<li><a href="/">Home</a></li>
+<li><a href="about">About</a></li>
+{% if session["loggedIn"] %}
+<li><a href="settings">Choose</a></li>
+<li class="active"><a href="#">Your List</a></li>
+{% endif %}
+{% endblock %}
+
 {% block body %}
+<div id="other">
+  <p id="top"></p>
 
-{% for event in events %}
-<div style="border-style: solid;">
-  <h3>Description</h3>
-  <p>{{event[1]}}</p>
-  <h3>Website</h3>
-  <p>{{event[2]}}</p>
-  <h3>Time and Date</h3>
-  <p>{{event[4]}}</p>
-  <form method="POST" id="form">
-    <button form="form" name="{{event[2]}}" type="submit">Remove from list</button>
-  </form>
+  <div class="container col-md-6 col-md-offset-3" style="margin-top:7%">
+    {% for event in events %}
+    <div class="boxed" align="center">
+      <h2>{{event[1]}}</h2>
+      <hr>
+      <p>{{event[2]}}</p>
+      <hr>
+      <h3><u>Time and Date</u></h3>
+      <p>{{event[4]}}</p>
+      <br>
+      <form method="POST" id="form">
+	<button class="btn btn-warning" form="form" name="{{event[2]}}" type="submit">Remove from list</button>
+      </form>
+      <br>
+    </div>
+    <br>
+    {% endfor %}
+    <div align="center">
+      <a href="#top" class="btn btn-warning">To the top!</a>
+    </div>
+    <br>
+  </div>
 </div>
-<br>
-{% endfor %}
-
 {% endblock %}
