@@ -15,15 +15,13 @@
 <h2>User Flow</h2>
 - User creates an account (with their email to get notifications?)
 - User puts in specifications for what they want to go to:
-  - Category of event
+  - Type of event
   - Price
   - Location (and distance from)
   - Date range
 - App generates random results from all of the APIs that fit those specifications
-- Results are shown one at a time, and user is given the choice to either swipe left (reject) or swipe right (attend) events, or just skip them entirely
-  - Rejected items will not pop up again
-  - Liked events will be added to a to-do list (?)
-  - Skipped events will stay on the list of results
+- Results are shown one at a time, and user is given the choice to either reject or attend events
+  - Liked events will be added to a to-do list
 - Events on the to-do list will lead to the site where you can purchase tickets, book a reservation, etc.
 
 <h2>Technologies</h2>
@@ -31,18 +29,16 @@
 - HTML/CSS
 - JavaScript
 - Python
-<br>
+
 <strong>Things We Can Figure Out</strong>
 - Handlebars (or other UX framework)
 - APIs:
   - Yelp
   - StubHub
   - Eventbrite
-  - Fandago
-  - Ticketmaster
   - Google Maps
   - Sendgrid
-<br>
+
 <strong>Ehhh</strong>
 - Geolocation
 - Digital Ocean server thing
@@ -51,7 +47,6 @@
 - Set up a server on Digital Ocean
 - User can manually add events to to-do list
 - More specifications to choose events
-- Show recommendations based on to-do list
 - Suggest it to a friend
 
 <h2>CHANGELOG</h2>
