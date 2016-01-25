@@ -1,5 +1,5 @@
 import requests
-import json,csv
+import json
 
 EVENTBRITE_OAUTH_TOKEN = 'FN34EGTLTCYGHBDNRIKB'
 url = "https://www.eventbriteapi.com/v3/"
@@ -16,8 +16,6 @@ def search(query, coordinates, radius, price, startDate, endDate):
         endDate (str): The latest possible UTC time and date, in the form yyyy-mm-dd;hh:mm (24-hour clock).
     Returns:
         queried: A list of the JSON responses from events that match the search query.
-	Creates:
-		eventbrite.csv: A CSV file of the information for all of the objects in queriedevents.
     """
     res = requests.get(
         url + "events/search/",
