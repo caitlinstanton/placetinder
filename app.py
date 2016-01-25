@@ -172,5 +172,9 @@ def logout():
 
 if __name__ == "__main__":
     app.debug = True
+<<<<<<< HEAD
     app.secret_key = "secretsecret"
+=======
+    app.secret_key = "secret_key"
+>>>>>>> 9e32844eb70faf22faa05fe283a22aaa64469f55
     app.run(host='0.0.0.0',port=8000)

@@ -97,18 +97,7 @@ def search(query, coordinates, radius, minPrice, maxPrice, earliestDate, latestD
     """
     # Gets the unfiltered events from the API
     r = searchHelper(0, query.replace(" ", "+"), coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)
-    numFound = r["numFound"]
-    if numFound == 0:
-        numRequests = 0
-    else:
-        numRequests = (numFound - 1) / 500
     events = r["events"]
-    for i in range(0, numRequests):
-        try:
-            nextEvents = searchHelper((i + 1) * 500, query, coordinates, radius, minPrice, maxPrice, earliestDate, latestDate)["events"]
-            events += nextEvents
-        except:
-            pass
     # Eliminate events that are not within the search radius
     i = 0
     while i < len(events):
