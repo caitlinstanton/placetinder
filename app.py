@@ -92,8 +92,7 @@ def settings():
             else:
                 eventbritePrice = "paid"
             try:
-                #eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
-                eventsStubHub = []
+                eventsStubHub = stubhubapi.search(eventType, coordinates, radius, lowPrice, highPrice, dateRange[:dateRange.index("--")] + ";00:00", dateRange[dateRange.index("--")+2:] + ";00:00")
             except:
                 eventsStubHub = []
             try:
