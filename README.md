@@ -95,5 +95,4 @@ Final touches, connected to DigitalOcean and created URL
 VICTORY!
 
 <h2>Bugs</h2>
-- Some of the events displayed on the results page are too large, so you have to zoom out on the screen to see the whole display. The scroll function isn't enabled on the results.html page.
 - StubHub events are only being displayed when placetinder is run on 'localhost:8000'
