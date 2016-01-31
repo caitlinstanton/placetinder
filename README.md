@@ -11,6 +11,7 @@
 <h2>Concept</h2>
 <p>Are you bored? Don't know where you wanna go? Come to place tinder!!</p>
 <p>Place Tinder helps users find places to go and events to see by selecting random events after the user puts in specifications.</p>
+<p>Check out our demo video <a href="https://youtu.be/HdFZLeQNU0A">here!</a></p>
 
 <h2>User Flow</h2>
 - User creates an account
