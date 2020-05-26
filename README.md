@@ -14,16 +14,21 @@
 <p>Check out our demo video <a href="https://youtu.be/HdFZLeQNU0A">here!</a></p>
 
 <h2>User Flow</h2>
-- User creates an account
-- User puts in specifications for what they want to go to:
-  - Type of event
-  - Price
-  - Location (obtained through geolocation), and distance from location
-  - Date range
-- App generates random results that fit those specifications from all of the APIs
-- Results are shown one at a time, and user is given the choice to either reject or attend events
-  - Liked events will be added to a to-do list
-- Events on the to-do list will have all of the information for the event, including its name, description, date/time, location, and link to the site where you can purchase tickets, book a reservation, etc.
+<ul>
+  <li>User creates an account</li>
+  <li>User puts in specifications for what they want to go to:
+    <ul>
+      <li>Type of event</li>
+      <li>Price</li>
+      <li>Location (obtained through geolocation), and distance from location</li>
+      <li>Date range</li>
+    </ul>
+  </li>
+  <li>App generates random results that fit those specifications from all of the APIs</li>
+  <li>Results are shown one at a time, and user is given the choice to either reject or attend events</li>
+  <li>Liked events will be added to a to-do list</li>
+  <li>Events on the to-do list will have all of the information for the event, including its name, description, date/time, location, and link to the site where you can purchase tickets, book a reservation, etc.</li>
+</ul>
 
 <h2>How to Run</h2>
 <b>ONLINE:</b>
@@ -31,42 +36,52 @@ Connect to the web app through either <a href="http://placetinder.mooo.com">our 
 <br><br>
 <b>LOCALLY:</b>
 <br>
-1. Install the following libraries using 'pip install':
-  - Flask
-  - sqlite3
-  - hashlib
-  - urllib2
-  - json
-  - module
-  - argparse
-  - pprint
-  - sys
-  - urllib
-  - oauth2
-  - random
-  - requests
-2. Run 'python app.py' in your terminal
-3. Navigate to 'localhost:8000'
-4. Sign in or create an account
-5. Experience placetinder!
+<ol>
+  <li>Install the following libraries using 'pip install':
+    <ul>
+      <li>Flask</li>
+      <li>sqlite3</li>
+      <li>hashlib</li>
+      <li>urllib2</li>
+      <li>json</li>
+      <li>module</li>
+      <li>argparse</li>
+      <li>pprint</li>
+      <li>sys</li>
+      <li>urllib</li>
+      <li>oauth2</li>
+      <li>random</li>
+      <li>requests</li>
+    </ul>
+  </li>
+  <li>Run 'python app.py' in your terminal</li>
+  <li>Navigate to 'localhost:8000'</li>
+  <li>Sign in or create an account</li>
+  <li>Experience placetinder!</li>
+</ol>
 
 <h2>Technologies</h2>
-- HTML/CSS
-- JavaScript
-- Python
-- APIs:
-  - Yelp
-  - StubHub
-  - Eventbrite
-  - Google Maps (for geolocation)
-- Hosted on Digital Ocean
+<ul>
+  <li>HTML/CSS</li>
+  <li>JavaScript</li>
+  <li>Python</li>
+  <li>APIs:
+    <li>Yelp</li>
+    <li>StubHub</li>
+    <li>Eventbrite</li>
+    <li>Google Maps (for geolocation)</li>
+  </li>
+  <li>Hosted on Digital Ocean</li>
+</ul>
 
 <h2>In the Future</h2>
-- User can manually add events to to-do list
-- More specifications to choose events
-- Suggest it to a friend
-- Notifications for upcoming events on to-do list (Twilio, Sendgrid)
-- Suggested events
+<ul>
+  <li>User can manually add events to to-do list</li>
+  <li>More specifications to choose events</li>
+  <li>Suggest it to a friend</li>
+  <li>Notifications for upcoming events on to-do list (Twilio, Sendgrid)</li>
+  <li>Suggested events</li>
+</ul>
 
 <h2>CHANGELOG</h2>
 12/21
